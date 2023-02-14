@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Sortie{% endblock %}
+
+{% block body %}
+    <h1>Créer une nouvelle sortie</h1>
+
+    {{ form_start(sortieForm) }}
+
+    {{ form_widget(sortieForm) }}
+    <a href="{{ path('lieu_create') }}"><img src="../{{ asset('Images/Plus.png') }}" alt="un plus pour ajouter un lieu"></a>
+
+    {{ form_start(sortieForm) }}
+
+    <a href="{{ path('sortie_index') }}">Retour à la liste</a>
+{% endblock %}
