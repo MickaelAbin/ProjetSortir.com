@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -41,5 +41,17 @@ class UserController extends AbstractController
         return $this->render('user/modifier.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
+    }
+    #[Route('user/details/{id}', name: 'user_details')]
+    public function details(
+        int             $id,
+        UserRepository $userRepository
+    ): Response
+    {
+        $serie = $userRepository->findOneBy(["id" => $id]);
+        return $this->render(
+            'user/details.html.twig',
+            compact('serie')
+        );
     }
 }
