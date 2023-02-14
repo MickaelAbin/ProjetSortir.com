@@ -13,6 +13,18 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
+    <header>
+        <a href="{{ path('user_modifier') }}">Mon profil | </a>
+        <a href="{{ path('sortie_index') }}">Accueil | </a>
+        <a href="{{ path('app_register') }}">Creation d'un membre</a>
+        {% if app.user %}
+
+            <a href="{{ path('app_logout') }}">Se Deconnecter</a>
+            <li>Bienvenue {{ app.user.pseudo}}</li>
+
+        {% endif %}
+
+    </header>
     <body>
         {% block body %}{% endblock %}
     </body>
