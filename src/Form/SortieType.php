@@ -29,11 +29,8 @@ class SortieType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Date et heure de la sortie : '
             ])
-            ->add('duree', TimeType::class,[
-                'html5' => true,
-                'widget' => 'single_text',
-                'label' => 'Durée : '
-            ])
+            ->add('duree')
+
             ->add('datecloture', DateTimeType::class,[
                 'html5' => true,
                 'widget' => 'single_text',
@@ -48,10 +45,12 @@ class SortieType extends AbstractType
             ])
             ->add('latitude', TextType::class, [
                 'mapped' => false,
+                'required'=>false,
                 'label' => 'Latitude : '
             ])
             ->add('longitude', TextType::class, [
                 'mapped' => false,
+                'required'=> false,
                 'label' => 'Longitude : '
             ])
         ;
