@@ -31,8 +31,8 @@
                 <td>{{ sortie.descriptioninfos }}</td>
                 <td>{{ sortie.urlphoto }}</td>
                 <td>
-                    <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">show</a>
-                    <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">edit</a>
+                    <a href="{{ path('sortie_detail', {'id': sortie.id}) }}">show</a>
+                    <a href="{{ path('sortie_update', {'id': sortie.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -43,5 +43,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_sortie_new') }}">Create new</a>
+    <a href="{{ path('sortie_create') }}">Create new</a>
 {% endblock %}

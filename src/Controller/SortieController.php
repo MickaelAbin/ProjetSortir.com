@@ -56,7 +56,7 @@ class SortieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $sortieRepository->save($sortie, true);
 
-            return $this->redirectToRoute('app_sortie_index', []);
+            return $this->redirectToRoute('sortie_index', []);
         }
 
         return $this->render('sortie/update.html.twig', [
