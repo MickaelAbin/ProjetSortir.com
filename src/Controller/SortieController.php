@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Sortie;
+use App\Entity\User;
 use App\Form\SortieType;
+use App\Repository\EtatsRepository;
 use App\Repository\SortieRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,16 +26,22 @@ class SortieController extends AbstractController
     }
 
     #[Route('/create', name: '_create')]
-    public function create(Request $request, SortieRepository $sortieRepository): Response
+    public function create(Request $request, SortieRepository $sortieRepository, UserRepository $userRepository, EtatsRepository $etatsRepository): Response
     {
+        $etat=$etatsRepository->findOneBy(['id'=>1]);
+        $user=$userRepository->find($this->getUser());
         $sortie = new Sortie();
+        $sortie->setOrganisateur($this->getUser());
+        $sortie->setSite($user->getSite());
+        $sortie->setEtat($etat);
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
+
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             $sortieRepository->save($sortie, true);
 
-            return $this->redirectToRoute('sortie', []);
+            return $this->redirectToRoute('sortie_index', []);
         }
 
         return $this->render('sortie/create.html.twig', [
@@ -56,7 +66,7 @@ class SortieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $sortieRepository->save($sortie, true);
 
-            return $this->redirectToRoute('app_sortie_index', []);
+            return $this->redirectToRoute('sortie_index', []);
         }
 
         return $this->render('sortie/update.html.twig', [
@@ -68,10 +78,27 @@ class SortieController extends AbstractController
     #[Route('/admin/delete/{id}', name: '_delete')]
     public function delete(Request $request, Sortie $sortie, SortieRepository $sortieRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $sortie->getId(), $request->request->get('_token'))) {
             $sortieRepository->remove($sortie, true);
         }
 
         return $this->redirectToRoute('app_sortie_index', []);
     }
+
+    #[Route('/inscription/{id}', name: '_inscription')]
+    public function inscription(
+        EntityManagerInterface $em,
+        SortieRepository $sortieRepository,
+        User $user,
+        int $id
+    ): Response
+    {
+        $sortie = $sortieRepository->findOneBy(['id'=>$id]);
+        $sortie->addParticipant($user);
+        $sortieRepository->save($sortie);
+        $em->persist($sortie);
+        $em->flush();
+        return $this->redirectToRoute('sortie_index',[]);
+    }
 }
+
