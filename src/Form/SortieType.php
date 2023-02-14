@@ -43,7 +43,7 @@ class SortieType extends AbstractType
             ->add('descriptioninfos',TextareaType::class)
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
-                'choice_name' => 'nom_lieu',
+                'choice_label' => 'nom_lieu',
                 'label' => 'Lieu : '
             ])
             ->add('latitude', TextType::class, [

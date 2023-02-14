@@ -2,8 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Entity\User;
+use App\Entity\Ville;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +41,23 @@ class SortieRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findDetailSortie(int $id)
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin(User::class, 'u')
+            ->addSelect('u')
+            ->innerJoin(Lieu::class, 'l', Join::WITH, 's.lieu = l.id')
+            ->addSelect('l')
+            ->innerJoin(Ville::class, 'v', Join::WITH, 'l.ville = v.id')
+            ->addSelect('v')
+            ->andWhere('s.id = :val')
+            ->setParameter('val', $id)
+            ->orderBy('u.nom', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**

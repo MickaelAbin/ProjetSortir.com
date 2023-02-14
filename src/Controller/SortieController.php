@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Sortie;
+use App\Entity\User;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +24,10 @@ class SortieController extends AbstractController
     }
 
     #[Route('/create', name: '_create')]
-    public function create(Request $request, SortieRepository $sortieRepository): Response
+    public function create(
+        Request $request,
+        SortieRepository $sortieRepository
+    ): Response
     {
         $sortie = new Sortie();
         $sortieForm = $this->createForm(SortieType::class, $sortie);
@@ -40,10 +45,14 @@ class SortieController extends AbstractController
     }
 
     #[Route('/detail/{id}', name: '_detail')]
-    public function detail(Sortie $sortie): Response
+    public function detail(
+        int $id,
+        SortieRepository $sortieRepository
+    ): Response
     {
+        dump($sortieRepository->findDetailSortie($id));
         return $this->render('sortie/detail.html.twig', [
-            'sortie' => $sortie,
+            'sortie' => $sortieRepository->findDetailSortie($id)[0],
         ]);
     }
 
