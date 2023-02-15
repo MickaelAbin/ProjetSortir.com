@@ -48,10 +48,10 @@ class UserController extends AbstractController
         UserRepository $userRepository
     ): Response
     {
-        $serie = $userRepository->findOneBy(["id" => $id]);
+        $user = $userRepository->findOneBy(["id" => $id]);
         return $this->render(
             'user/details.html.twig',
-            compact('serie')
+            compact('user')
         );
     }
 }

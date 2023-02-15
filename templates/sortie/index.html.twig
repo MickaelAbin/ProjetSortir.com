@@ -16,6 +16,7 @@
                 <th>Datecloture</th>
                 <th>Nbinscriptionsmax</th>
                 <th>Etat</th>
+                <th>Organisateur</th>
                 <th>Descriptioninfos</th>
                 <th>Urlphoto</th>
                 <th>actions</th>
@@ -31,6 +32,10 @@
                 <td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ sortie.nbinscriptionsmax }}</td>
                 <td>{{ sortie.etat.libelle }}</td>
+                <td>
+                    <a href="{{ path('user_details', {'id': sortie.organisateur.id}) }}" title="vue organisateur">
+                    {{ sortie.organisateur.nom }}</a>
+                </td>
                 <td>{{ sortie.descriptioninfos }}</td>
 
                 <td>
