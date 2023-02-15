@@ -12,7 +12,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Il y a déja un compte avec cette adresse mail')]
+#[UniqueEntity(fields: ['pseudo'], message: 'Il y a déja un compte avec ce pseudo')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -20,6 +21,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length([], max: 250, maxMessage: '180 caractères maximum')]
+    #[Assert\Email(
+        message: " Votre Email '{{ value }}' est non valide.",
+    )]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -29,15 +34,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
+    #[Assert\Length([], min: 8, max: 50, minMessage: '8 caractères minimun', maxMessage: '50 caractères maximum')]
+    #[Assert\NotBlank]
     #[ORM\Column]
     private ?string $password = null;
 
+    #[Assert\Length([], min: 4, max: 30, minMessage: '4 caractères minimun', maxMessage: '30 caractères maximum')]
+    #[Assert\NotBlank]
     #[ORM\Column(length: 30)]
     private ?string $pseudo = null;
 
+    #[Assert\Length([], min: 2, max: 30, minMessage: '2 caractères minimun', maxMessage: '30 caractères maximum')]
+    #[Assert\NotBlank]
     #[ORM\Column(length: 30)]
     private ?string $nom = null;
 
+    #[Assert\Length([], min: 2, max: 30, minMessage: '2 caractères minimun', maxMessage: '30 caractères maximum')]
+    #[Assert\NotBlank]
     #[ORM\Column(length: 30)]
     private ?string $prenom = null;
 #[Assert\Regex("/^0[1-9]\d{8}$/",message: "Le numéro de téléphone '{{ value }}' n'est pas un numéro de téléphone valide en France.")]
