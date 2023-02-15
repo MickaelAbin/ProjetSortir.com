@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etats;
 use App\Entity\Sortie;
 use App\Entity\User;
 use App\Form\SortieType;
@@ -79,7 +80,15 @@ class SortieController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/annuler/{id}', name: '_annuler')]
+    public function annuler(Request $request, Sortie $sortie, SortieRepository $sortieRepository, EtatsRepository $etatsRepository): Response
+    {
 
+        $etat=($etatsRepository->find('2'));
+        $sortie->setEtat($etat);
+        $sortieRepository->save($sortie, true);
+        return $this->redirectToRoute('sortie_index', []);
+    }
     #[Route('/admin/delete/{id}', name: '_delete')]
     public function delete(Request $request, Sortie $sortie, SortieRepository $sortieRepository): Response
     {
