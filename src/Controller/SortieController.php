@@ -106,10 +106,8 @@ class SortieController extends AbstractController
         UserRepository $userRepository,
         int $id,
 
-
     ): Response
     {
-
         $date = new \DateTime();
         $sortie = $sortieRepository->findOneBy(['id' => $id]);
         $user = $userRepository->find($this->getUser());
@@ -118,10 +116,32 @@ class SortieController extends AbstractController
             $em->persist($sortie);
             $em->flush();
             $this->addFlash('succes','Vous êtes bien inscrit');
-            return $this->redirectToRoute('sortie_index', []);
+                return $this->redirectToRoute('sortie_index', []);
         }
-        $this->addFlash('echec','Vous ne pouvez pas vous inscrire à cette sortie');
+            $this->addFlash('echec','Vous ne pouvez pas vous inscrire à cette sortie');
+                return $this->redirectToRoute('sortie_index', []);
+    }
+#[Route('/desister/{id}',name:'_desister')]
+    public function desister(
+        EntityManagerInterface $em,
+        SortieRepository $sortieRepository,
+        UserRepository $userRepository,
+        int $id,
+
+    ):Response
+{
+    $date = new \DateTime();
+    $sortie = $sortieRepository->findOneBy(['id' => $id]);
+    $user = $userRepository->find($this->getUser());
+    if ($date < $sortie->getDatedebut()) {
+        $sortie->removeParticipant($user);
+        $em->persist($sortie);
+        $em->flush();
+        $this->addFlash('retrait', 'Vous ne participez plus à la sortie' . $sortie->getNom());
         return $this->redirectToRoute('sortie_index', []);
     }
+    $this->addFlash('retrait', 'Vous ne pouvez pas vous désinscrire de la sortie: ' . $sortie->getNom());
+    return $this->redirectToRoute('sortie_index', []);
+}
 }
 
