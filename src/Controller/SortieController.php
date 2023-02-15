@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etats;
 use App\Entity\Sortie;
 use App\Entity\User;
 use App\Form\FiltreType;
@@ -16,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 #[Route('/sortie', name: 'sortie')]
 class SortieController extends AbstractController
@@ -52,19 +54,22 @@ class SortieController extends AbstractController
         EtatsRepository $etatsRepository
     ): Response
     {
-        $etat=$etatsRepository->findOneBy(['id'=>1]);
+
         $user=$userRepository->find($this->getUser());
         $sortie = new Sortie();
         $sortie->setOrganisateur($this->getUser());
         $sortie->setSite($user->getSite());
-        $sortie->setEtat($etat);
+
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
 
-
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+            if($sortieForm->getClickedButton() === $sortieForm->get('Enregistrer')) {
+                $sortie->setEtat($etatsRepository->findOneBy(['libelle'=>'créer']));
+            }else{
+                $sortie->setEtat($etatsRepository->findOneBy(['libelle'=>'ouverte']));
+            }
             $sortieRepository->save($sortie, true);
-
             return $this->redirectToRoute('sortie_index', []);
         }
 
@@ -106,7 +111,15 @@ class SortieController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/annuler/{id}', name: '_annuler')]
+    public function annuler(Request $request, Sortie $sortie, SortieRepository $sortieRepository, EtatsRepository $etatsRepository): Response
+    {
 
+        $etat=($etatsRepository->find('2'));
+        $sortie->setEtat($etat);
+        $sortieRepository->save($sortie, true);
+        return $this->redirectToRoute('sortie_index', []);
+    }
     #[Route('/admin/delete/{id}', name: '_delete')]
     public function delete(Request $request, Sortie $sortie, SortieRepository $sortieRepository): Response
     {
@@ -121,16 +134,45 @@ class SortieController extends AbstractController
     public function inscription(
         EntityManagerInterface $em,
         SortieRepository $sortieRepository,
-        User $user,
-        int $id
+        UserRepository $userRepository,
+        int $id,
+
     ): Response
     {
-        $sortie = $sortieRepository->findOneBy(['id'=>$id]);
-        $sortie->addParticipant($user);
-        $sortieRepository->save($sortie);
+        $date = new \DateTime();
+        $sortie = $sortieRepository->findOneBy(['id' => $id]);
+        $user = $userRepository->find($this->getUser());
+        if ($sortie->getDatecloture() > $date && $sortie->getEtat()->getLibelle() == 'ouverte') {
+            $sortie->addParticipant($user);
+            $em->persist($sortie);
+            $em->flush();
+            $this->addFlash('succes','Vous êtes bien inscrit');
+                return $this->redirectToRoute('sortie_index', []);
+        }
+            $this->addFlash('echec','Vous ne pouvez pas vous inscrire à cette sortie');
+                return $this->redirectToRoute('sortie_index', []);
+    }
+#[Route('/desister/{id}',name:'_desister')]
+    public function desister(
+        EntityManagerInterface $em,
+        SortieRepository $sortieRepository,
+        UserRepository $userRepository,
+        int $id,
+
+    ):Response
+{
+    $date = new \DateTime();
+    $sortie = $sortieRepository->findOneBy(['id' => $id]);
+    $user = $userRepository->find($this->getUser());
+    if ($date < $sortie->getDatedebut()) {
+        $sortie->removeParticipant($user);
         $em->persist($sortie);
         $em->flush();
-        return $this->redirectToRoute('sortie_index',[]);
+        $this->addFlash('retrait', 'Vous ne participez plus à la sortie' . $sortie->getNom());
+        return $this->redirectToRoute('sortie_index', []);
     }
+    $this->addFlash('retrait', 'Vous ne pouvez pas vous désinscrire de la sortie: ' . $sortie->getNom());
+    return $this->redirectToRoute('sortie_index', []);
+}
 }
 

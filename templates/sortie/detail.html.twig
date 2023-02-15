@@ -16,8 +16,10 @@
     <p>Nombre de participants : {{ sortie.participants | length }}/{{ sortie.nbinscriptionsmax }} , Inscriptions jusqu'au {{ sortie.datecloture | date('d/m/y') }}</p>
 
     {% for participant in sortie.participants %}
-        <p>{{ participant.nom }}</p>
 
+        <a href="{{ path('user_details', {'id': participant.id}) }}" title="vue participant">
+            <p>{{ participant.nom }}</p>
+        </a>
     {% endfor %}
 
     <a href="{{ path('sortie_index') }}">retour à la liste</a>

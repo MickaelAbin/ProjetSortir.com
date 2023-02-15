@@ -19,7 +19,7 @@
                 <th>Clôture</th>
                 <th>Duree</th>
                 <th>Inscrits/Places</th>
-                <th>Etats</th>
+                <th>Etat</th>
                 <th>Inscrit</th>
                 <th>Organisateur</th>
                 <th>Actions</th>
@@ -37,11 +37,21 @@
                 <td>{{ sortie.etat.libelle }}</td>
                 <td>Inscrit ou non</td>
                 <td><a href="{{ path('user_details',{'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }}</a></td>
+                <td>{{ sortie.descriptioninfos }}</td>
+
                 <td>
                     <a href="{{ path('sortie_detail', {'id': sortie.id}) }}">Afficher</a>
-                    <a href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
-                    <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
-                    <a href="{{ path('sortie_update', {'id': sortie.id}) }}">Se désister</a>
+                    <a href="{{ path('sortie_desister', {'id': sortie.id}) }}">Se désister</a>
+
+                    {% if app.user.nom ==  sortie.organisateur.nom  %}
+                        <a href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
+                        {% if sortie.etat.libelle !=  'annulée'  %}
+                        <a href="{{ path('sortie_annuler', {'id': sortie.id}) }}">Annuler</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
+                    {% endif %}
+
                 </td>
             </tr>
         {% else %}
