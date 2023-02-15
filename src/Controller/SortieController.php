@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 #[Route('/sortie', name: 'sortie')]
 class SortieController extends AbstractController
@@ -93,16 +94,25 @@ class SortieController extends AbstractController
     public function inscription(
         EntityManagerInterface $em,
         SortieRepository $sortieRepository,
-        User $user,
-        int $id
+        UserRepository $userRepository,
+        int $id,
+
+
     ): Response
     {
-        $sortie = $sortieRepository->findOneBy(['id'=>$id]);
-        $sortie->addParticipant($user);
-        $sortieRepository->save($sortie);
-        $em->persist($sortie);
-        $em->flush();
-        return $this->redirectToRoute('sortie_index',[]);
+
+        $date = new \DateTime();
+        $sortie = $sortieRepository->findOneBy(['id' => $id]);
+        $user = $userRepository->find($this->getUser());
+        if ($sortie->getDatecloture() > $date && $sortie->getEtat()->getLibelle() == 'ouverte') {
+            $sortie->addParticipant($user);
+            $em->persist($sortie);
+            $em->flush();
+            $this->addFlash('succes','Vous êtes bien inscrit');
+            return $this->redirectToRoute('sortie_index', []);
+        }
+        $this->addFlash('echec','Vous ne pouvez pas vous inscrire à cette sortie');
+        return $this->redirectToRoute('sortie_index', []);
     }
 }
 
