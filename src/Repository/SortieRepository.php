@@ -2,13 +2,17 @@
 
 namespace App\Repository;
 
+use App\Entity\Etats;
 use App\Entity\Lieu;
+use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\User;
 use App\Entity\Ville;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -48,9 +52,9 @@ class SortieRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->innerJoin(User::class, 'u')
             ->addSelect('u')
-            ->innerJoin(Lieu::class, 'l', Join::WITH, 's.lieu = l.id')
+            ->innerJoin(Lieu::class, 'l', Join::ON, 's.lieu = l.id')
             ->addSelect('l')
-            ->innerJoin(Ville::class, 'v', Join::WITH, 'l.ville = v.id')
+            ->innerJoin(Ville::class, 'v', Join::ON, 'l.ville = v.id')
             ->addSelect('v')
             ->andWhere('s.id = :val')
             ->setParameter('val', $id)
@@ -58,6 +62,55 @@ class SortieRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function findSortieWithFiltre(
+        $filtres,
+        string $user
+    ) {
+
+        $participants = $this->getEntityManager()->getRepository('App\Entity\User')
+            ->createQueryBuilder('user')
+            ->innerJoin(Sortie::class, 's')
+            ->andWhere('user.email = :mail')
+            ->setParameter('mail', $user)
+            ->Select('s.id');
+
+        $query = $this->createQueryBuilder('sortie')
+            ->addSelect('sortie')
+            ->innerJoin(Lieu::class,'lieu', Join::WITH, 'sortie.lieu = lieu.id')
+            ->innerJoin(Ville::class,'ville', Join::WITH, 'lieu.ville = ville.id')
+            ->innerJoin(Site::class, 'site', Join::WITH, 'sortie.site = site.id')
+            ->innerJoin(Etats::class, 'etat', Join::WITH, 'sortie.etat = etat.id')
+            ->innerJoin(User::class, 'user', Join::WITH, 'sortie.organisateur = user.id')
+        ;
+        $query->andWhere("sortie.nom like :recherche")
+            ->setParameter('recherche', '%'.$filtres['recherche'].'%')
+            ->andWhere('site.id = :id')
+            ->setParameter('id', $filtres['site']->getId());
+        if (!isNull($filtres['dateDepart'])) {
+            $query->andWhere('sortie.datedebut > :dateDebut')
+                ->setParameter('dateDebut', $filtres['dateDepart']);
+        }
+        if (!isNull($filtres['dateFin'])) {
+            $query->andWhere('sortie.datedebut < :dateFin')
+                ->setParameter('dateFin', $filtres['dateFin']);
+        }
+        if ($filtres['organise']) {
+            $query->andWhere('sortie.organisateur = :organisateur')
+                ->setParameter('organisateur', $user);
+        }
+        if ($filtres['inscrit']) {
+            $query->andWhere($query->expr()->in('sortie.id',$participants->getDQL()));
+        }
+        if ($filtres['nonInscrit']) {
+            $query->andWhere($query->expr()->notIn('sortie.id',$participants->getDQL()));
+        }
+        if ($filtres['passe']) {
+            $query->andWhere('sortie.datedebut < :now')
+                ->setParameter('now', new \DateTime());
+        }
+        return $query->getQuery()->getResult();
     }
 
 //    /**
@@ -73,8 +126,8 @@ class SortieRepository extends ServiceEntityRepository
 //            ->getQuery()
 //            ->getResult()
 //        ;
-//    }
 
+//    }
 //    public function findOneBySomeField($value): ?Sortie
 //    {
 //        return $this->createQueryBuilder('s')
@@ -83,5 +136,6 @@ class SortieRepository extends ServiceEntityRepository
 //            ->getQuery()
 //            ->getOneOrNullResult()
 //        ;
+
 //    }
 }
