@@ -35,7 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[Assert\Length([], min: 8, max: 50, minMessage: '8 caractères minimun', maxMessage: '50 caractères maximum')]
-    #[Assert\NotBlank]
+
     #[ORM\Column]
     private ?string $password = null;
 
@@ -53,7 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     #[ORM\Column(length: 30)]
     private ?string $prenom = null;
-#[Assert\Regex("/^0[1-9]\d{8}$/",message: "Le numéro de téléphone '{{ value }}' n'est pas un numéro de téléphone valide en France.")]
+#[Assert\Regex("/^0[1-9]\d{8}$/",message: "Le numéro de téléphone {{ value }} n'est pas un numéro de téléphone valide en France.")]
     #[ORM\Column(length: 15, nullable: true)]
     private ?string $telephone = null;
 
