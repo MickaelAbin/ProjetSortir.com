@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Entity\User;
+use App\Form\FiltreType;
 use App\Form\SortieType;
 use App\Repository\EtatsRepository;
+use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
+use App\Service\SortieService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,15 +21,36 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     #[Route('/', name: '_index')]
-    public function index(SortieRepository $sortieRepository): Response
+    public function index(
+        SortieRepository $sortieRepository,
+        SiteRepository $siteRepository,
+        Request $request
+    ): Response
     {
+        $filtreForm = $this->createForm(FiltreType::class);
+        $filtreForm->handleRequest($request);
+
+        if ($filtreForm->isSubmitted()) {
+            dump($filtreForm->getData());
+            $sortie = (new SortieService($sortieRepository))->findSortieWithFiltre($filtreForm, $this->getUser()->getUserIdentifier());
+        }else {
+            $sortie = $sortieRepository->findAll();
+        }
+        dump($sortie);
         return $this->render('sortie/index.html.twig', [
-            'sorties' => $sortieRepository->findAll(),
+            'sorties' => $sortie,
+            'sites' => $siteRepository->findAll(),
+            'filtreForm' => $filtreForm
         ]);
     }
 
     #[Route('/create', name: '_create')]
-    public function create(Request $request, SortieRepository $sortieRepository, UserRepository $userRepository, EtatsRepository $etatsRepository): Response
+    public function create(
+        Request $request,
+        SortieRepository $sortieRepository,
+        UserRepository $userRepository,
+        EtatsRepository $etatsRepository
+    ): Response
     {
         $etat=$etatsRepository->findOneBy(['id'=>1]);
         $user=$userRepository->find($this->getUser());
@@ -62,7 +86,11 @@ class SortieController extends AbstractController
     }
 
     #[Route('/update/{id}', name: '_update')]
-    public function update(Request $request, Sortie $sortie, SortieRepository $sortieRepository): Response
+    public function update(
+        Request $request,
+        Sortie $sortie,
+        SortieRepository $sortieRepository
+    ): Response
     {
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
