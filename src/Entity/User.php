@@ -23,7 +23,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Assert\Length([], max: 250, maxMessage: '180 caractères maximum')]
     #[Assert\Email(
-        message: " Votre Email '{{ value }}' est non valide.",
+        message: " Votre Email est non valide.",
     )]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
@@ -34,12 +34,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[Assert\Length([], min: 8, max: 50, minMessage: '8 caractères minimun', maxMessage: '50 caractères maximum')]
+
+    #[Assert\Length([],min: 8, max: 50, minMessage: '8 caractères minimun', maxMessage: '50 caractères maximum')]
 
     #[ORM\Column]
     private ?string $password = null;
 
-    #[Assert\Length([], min: 4, max: 30, minMessage: '4 caractères minimun', maxMessage: '30 caractères maximum')]
+    #[Assert\Length([],min: 4, max: 30, minMessage: '4 caractères minimun', maxMessage: '30 caractères maximum')]
     #[Assert\NotBlank]
     #[ORM\Column(length: 30)]
     private ?string $pseudo = null;
