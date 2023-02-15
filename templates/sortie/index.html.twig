@@ -15,6 +15,7 @@
                 <th>Duree</th>
                 <th>Datecloture</th>
                 <th>Nbinscriptionsmax</th>
+                <th>Etat</th>
                 <th>Descriptioninfos</th>
                 <th>Urlphoto</th>
                 <th>actions</th>
@@ -29,15 +30,24 @@
                 <td>{{ sortie.duree }}</td>
                 <td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ sortie.nbinscriptionsmax }}</td>
+                <td>{{ sortie.etat.libelle }}</td>
                 <td>{{ sortie.descriptioninfos }}</td>
 
                 <td>
 
                     <a href="{{ path('sortie_detail', {'id': sortie.id}) }}">Afficher</a>
-                    <a href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
-                    <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
+
+
                     <a href="{{ path('sortie_update', {'id': sortie.id}) }}">Se désister</a>
 
+                    {% if app.user.nom ==  sortie.organisateur.nom  %}
+                        <a href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
+                        {% if sortie.etat.libelle !=  'annulée'  %}
+                        <a href="{{ path('sortie_annuler', {'id': sortie.id}) }}">Annuler</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
+                    {% endif %}
 
                 </td>
             </tr>
