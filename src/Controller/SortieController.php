@@ -30,19 +30,22 @@ class SortieController extends AbstractController
     #[Route('/create', name: '_create')]
     public function create(Request $request, SortieRepository $sortieRepository, UserRepository $userRepository, EtatsRepository $etatsRepository): Response
     {
-        $etat=$etatsRepository->findOneBy(['id'=>1]);
+
         $user=$userRepository->find($this->getUser());
         $sortie = new Sortie();
         $sortie->setOrganisateur($this->getUser());
         $sortie->setSite($user->getSite());
-        $sortie->setEtat($etat);
+
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
 
-
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+            if($sortieForm->getClickedButton() === $sortieForm->get('Enregistrer')) {
+                $sortie->setEtat($etatsRepository->findOneBy(['libelle'=>'créer']));
+            }else{
+                $sortie->setEtat($etatsRepository->findOneBy(['libelle'=>'ouverte']));
+            }
             $sortieRepository->save($sortie, true);
-
             return $this->redirectToRoute('sortie_index', []);
         }
 
