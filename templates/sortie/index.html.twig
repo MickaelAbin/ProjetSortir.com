@@ -3,17 +3,7 @@
 {% block title %}Sortie index{% endblock %}
 
 {% block body %}
-    <header>
-        <a href="{{ path('user_modifier') }}">Mon profil | </a>
-        <a href="{{ path('sortie_index') }}">Accueil | </a>
-        <a href="{{ path('app_register') }}">Creation d'un membre</a>
-        {% if app.user %}
 
-            <a href="{{ path('app_logout') }}">Se Deconnecter</a>
-            <li>Bienvenue {{ app.user.pseudo}}</li>
-
-        {% endif %}
-    </header>
 
     <h1>Sortie index</h1>
     <p>Date du jour : {{ 'now' | date('d/m/Y') }}</p>
@@ -78,5 +68,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('sortie_create') }}">Create new</a>
+    <a href="{{ path('sortie_create') }}"><button class="button is-primary is-outlined">Créer une sortie</button></a>
 {% endblock %}
