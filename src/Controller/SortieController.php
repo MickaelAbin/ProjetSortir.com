@@ -33,12 +33,13 @@ class SortieController extends AbstractController
         $filtreForm->handleRequest($request);
 
         if ($filtreForm->isSubmitted()) {
-            dump($filtreForm->getData());
             $sortie = (new SortieService($sortieRepository))->findSortieWithFiltre($filtreForm, $this->getUser()->getUserIdentifier());
         }else {
             $sortie = $sortieRepository->findAll();
         }
         dump($sortie);
+        dump($filtreForm->getData());
+        dump($this->getUser()->getUserIdentifier());
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortie,
             'sites' => $siteRepository->findAll(),

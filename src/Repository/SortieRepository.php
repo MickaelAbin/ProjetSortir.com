@@ -50,11 +50,11 @@ class SortieRepository extends ServiceEntityRepository
     public function findDetailSortie(int $id)
     {
         return $this->createQueryBuilder('s')
-            ->innerJoin(User::class, 'u')
+            ->innerJoin(User::class, 'u', Join::WITH, 's.organisateur = u.id')
             ->addSelect('u')
-            ->innerJoin(Lieu::class, 'l', Join::ON, 's.lieu = l.id')
+            ->innerJoin(Lieu::class, 'l', Join::WITH, 's.lieu = l.id')
             ->addSelect('l')
-            ->innerJoin(Ville::class, 'v', Join::ON, 'l.ville = v.id')
+            ->innerJoin(Ville::class, 'v', Join::WITH, 'l.ville = v.id')
             ->addSelect('v')
             ->andWhere('s.id = :val')
             ->setParameter('val', $id)
@@ -70,9 +70,9 @@ class SortieRepository extends ServiceEntityRepository
     ) {
 
         $participants = $this->getEntityManager()->getRepository('App\Entity\User')
-            ->createQueryBuilder('user')
+            ->createQueryBuilder('u')
             ->innerJoin(Sortie::class, 's')
-            ->andWhere('user.email = :mail')
+            ->andWhere('u.email = :mail')
             ->setParameter('mail', $user)
             ->Select('s.id');
 
@@ -84,32 +84,34 @@ class SortieRepository extends ServiceEntityRepository
             ->innerJoin(Etats::class, 'etat', Join::WITH, 'sortie.etat = etat.id')
             ->innerJoin(User::class, 'user', Join::WITH, 'sortie.organisateur = user.id')
         ;
-        $query->andWhere("sortie.nom like :recherche")
-            ->setParameter('recherche', '%'.$filtres['recherche'].'%')
-            ->andWhere('site.id = :id')
-            ->setParameter('id', $filtres['site']->getId());
-        if (!isNull($filtres['dateDepart'])) {
-            $query->andWhere('sortie.datedebut > :dateDebut')
+        if (isset($filtres['recherche'])) {
+            $query->andWhere("sortie.nom like :recherche")
+                ->setParameter('recherche', '%'.$filtres['recherche'].'%');
+        }
+        if (isset($filtres['dateDepart'])) {
+            $query->andWhere('sortie.datedebut >= :dateDebut')
                 ->setParameter('dateDebut', $filtres['dateDepart']);
         }
-        if (!isNull($filtres['dateFin'])) {
-            $query->andWhere('sortie.datedebut < :dateFin')
+        if (isset($filtres['dateFin'])) {
+            $query->andWhere('sortie.datedebut <= :dateFin')
                 ->setParameter('dateFin', $filtres['dateFin']);
         }
         if ($filtres['organise']) {
-            $query->andWhere('sortie.organisateur = :organisateur')
+            $query->orWhere('sortie.organisateur = :organisateur')
                 ->setParameter('organisateur', $user);
         }
         if ($filtres['inscrit']) {
-            $query->andWhere($query->expr()->in('sortie.id',$participants->getDQL()));
+            $query->orWhere($query->expr()->in('sortie.id',$participants->getDQL()));
         }
         if ($filtres['nonInscrit']) {
-            $query->andWhere($query->expr()->notIn('sortie.id',$participants->getDQL()));
+            $query->orWhere($query->expr()->notIn('sortie.id',$participants->getDQL()));
         }
         if ($filtres['passe']) {
-            $query->andWhere('sortie.datedebut < :now')
+            $query->orWhere('sortie.datedebut <= :now')
                 ->setParameter('now', new \DateTime());
         }
+        $query->andWhere('site.id = :id')
+            ->setParameter('id', $filtres['site']->getId());
         return $query->getQuery()->getResult();
     }
 
