@@ -18,6 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -37,8 +38,9 @@ class RegistrationFormType extends AbstractType
                     "choice_label" => "nom_site"
                 ]
             )
-            ->add('photo',filetype::class,[
-                'required'=>false
+            ->add('imageFile',VichFileType::class,[
+                'required' => false,
+                'download_uri' => false,
             ])
 
 
