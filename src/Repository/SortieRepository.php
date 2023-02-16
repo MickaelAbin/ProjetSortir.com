@@ -50,7 +50,7 @@ class SortieRepository extends ServiceEntityRepository
     public function findDetailSortie(int $id)
     {
         return $this->createQueryBuilder('s')
-            ->innerJoin(User::class, 'u')
+            ->innerJoin(User::class, 'u', Join::WITH, 's.organisateur = u.id')
             ->addSelect('u')
             ->innerJoin(Lieu::class, 'l', Join::WITH, 's.lieu = l.id')
             ->addSelect('l')
