@@ -101,10 +101,10 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('organisateur', $user);
         }
         if ($filtres['inscrit']) {
-            $query->orWhere($query->expr()->in('sortie.id',$participants->getDQL()));
+//            $query->orWhere($query->expr()->in('sortie.id',$participants->getDQL()));
         }
         if ($filtres['nonInscrit']) {
-            $query->orWhere($query->expr()->notIn('sortie.id',$participants->getDQL()));
+//            $query->orWhere($query->expr()->notIn('sortie.id',$participants->getDQL()));
         }
         if ($filtres['passe']) {
             $query->orWhere('sortie.datedebut <= :now')
