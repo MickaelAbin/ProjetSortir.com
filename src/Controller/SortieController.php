@@ -85,7 +85,7 @@ class SortieController extends AbstractController
         SortieRepository $sortieRepository
     ): Response
     {
-        dump($sortieRepository->findDetailSortie($id));
+
         return $this->render('sortie/detail.html.twig', [
             'sortie' => $sortieRepository->findDetailSortie($id)[0],
         ]);

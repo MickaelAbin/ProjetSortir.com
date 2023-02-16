@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
@@ -16,21 +17,29 @@ class Sortie
     #[ORM\Column]
     private ?int $id = null;
 
+
+    #[Assert\NotBlank(message: 'Le nom doit être renseigné')]
+    #[Assert\Length(min:2,max:30 )]
     #[ORM\Column(length: 30)]
     private ?string $nom = null;
 
+    #[Assert\GreaterThan(propertyPath: "datecloture")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $datedebut = null;
 
+    #[Assert\NotNull(message: 'Entrer une duréé')]
+    #[Assert\GreaterThan(value: 0)]
     #[ORM\Column(nullable: true)]
     private ?int $duree = null;
 
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $datecloture = null;
-
+    #[Assert\NotNull(message: 'Inserer un nombre de participants')]
+    #[Assert\GreaterThan(value: 0)]
     #[ORM\Column]
     private ?int $nbinscriptionsmax = null;
-
+    #[Assert\Length(min: 0,max: 500)]
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $descriptioninfos = null;
 
