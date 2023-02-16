@@ -121,6 +121,34 @@ class SortieController extends AbstractController
         $sortieRepository->save($sortie, true);
         return $this->redirectToRoute('sortie_index', []);
     }
+
+    #[Route('/detailannulation/{id}', name: '_detailannulation')]
+    public function detailannulation(
+        int $id,
+        EtatsRepository $etatsRepository,
+        SortieRepository $sortieRepository,
+        Request $request,
+    ): Response
+    {
+
+        dump($request->get("valide"));
+        if ($request->get("valide") !== null) {
+
+            $sortie=$sortieRepository->find($id);
+            $etat=($etatsRepository->find('2'));
+            $sortie->setEtat($etat);
+            $sortie->setDescriptioninfos($request->get('motif'));
+            $sortieRepository->save($sortie, true);
+            return $this->redirectToRoute('sortie_index', []);
+        }
+
+        return $this->render('sortie/detailannulation.html.twig', [
+
+            'sortie' => $sortieRepository->findDetailSortie($id)[0],
+        ]);
+    }
+
+
     #[Route('/admin/delete/{id}', name: '_delete')]
     public function delete(Request $request, Sortie $sortie, SortieRepository $sortieRepository): Response
     {

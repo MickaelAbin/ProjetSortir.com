@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Annuler une sortie</h1>
+    <p>Nom de la sortie : {{ sortie.nom }}</p>
+    <p>Le {{ sortie.datedebut | date('d/m/y') }} à {{ sortie.datedebut | date('H:i') }} dans la ville de {{ sortie.lieu.ville.nomVille }}</p>
+    <p>Lieu : {{ sortie.lieu.nomLieu }}</p>
+    <p>Rue : {{ sortie.lieu.rue }}</p>
+    <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
+    <p>Motif : <form action="{{ path('sortie_detailannulation',{'id': sortie.id}) }}"><input type="textarea" name="motif">
+    <button type="submit" name="valide" class="btn">Enregistrer</button>
+</form></p>
+
+
+
+
+    <a href="{{ path('sortie_index') }}">Annuler</a>
+
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
