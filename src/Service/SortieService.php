@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Repository\SortieRepository;
 use Symfony\Component\Form\FormInterface;
 use function PHPUnit\Framework\isEmpty;
-use function PHPUnit\Framework\isNull;
 use function PHPUnit\Framework\throwException;
 
 class SortieService
@@ -23,7 +22,8 @@ class SortieService
         string $user
     ) {
         $filtres = $filtreForm->getData();
-        $filtres = self::verifForm($filtres);
+        self::verifForm($filtres);
+        dump($filtres);
         return $this->sortieRepository->findSortieWithFiltre(
             $filtres,
             $user
@@ -31,18 +31,8 @@ class SortieService
     }
 
     private function verifForm($filtres){
-        if (!isNull($filtres['dateDepart']) && !isNull($filtres['dateFin']) && ($filtres['dateDebut'] > $filtres['dateFin'])){
+        if (isset($filtres['dateDepart']) && isset($filtres['dateFin']) && ($filtres['dateDepart'] > $filtres['dateFin'])){
             throw new \Exception('La date de début doit être antérieure à la date de fin');
         }
-        if (isNull($filtres['recherche'])){
-            $filtres['recherche'] = '';
-        }
-        if (isNull($filtres['dateDepart'])){
-            $filtres['dateDepart'] = '';
-        }
-        if (isNull($filtres['dateFin'])){
-            $filtres['dateFin'] = '';
-        }
-        return $filtres;
     }
 }
