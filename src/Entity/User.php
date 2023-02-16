@@ -5,15 +5,20 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Il y a déja un compte avec cette adresse mail')]
 #[UniqueEntity(fields: ['pseudo'], message: 'Il y a déja un compte avec ce pseudo')]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -35,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
 
-    #[Assert\Length([],min: 8, max: 50, minMessage: '8 caractères minimun', maxMessage: '50 caractères maximum')]
+    #[Assert\Length([],min: 8, max: 100, minMessage: '8 caractères minimun', maxMessage: '50 caractères maximum')]
 
     #[ORM\Column]
     private ?string $password = null;
@@ -72,8 +77,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Sortie::class, inversedBy: 'participants')]
     private Collection $participant;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $photo = null;
+    #[ORM\Column( nullable: true)]
+    private  $photo = null;
+
+
+    #[Vich\UploadableField(mapping: 'user_avatar',fileNameProperty: 'photo')]
+    private  $imageFile ;
+
+
 
     public function __construct()
     {
@@ -278,15 +289,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhoto(): ?string
+    public function getPhoto()
     {
         return $this->photo;
     }
 
-    public function setPhoto(?string $photo): self
+    public function setPhoto( $photo)
     {
         $this->photo = $photo;
 
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAct = new \DateTime('now');
+        }
         return $this;
     }
+    public function __serialize(): array    {
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'imageFile' => base64_encode($this->imageFile),
+            'password' => $this->password,
+        ];
+    }
+
+
+
+
+
 }

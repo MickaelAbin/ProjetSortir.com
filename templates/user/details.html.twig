@@ -11,6 +11,7 @@
     <div> Téléphone : {{ user.telephone }}</div>
     <div> Email : {{ user.email }}</div>
     <div> Ville de rattachement : {{ user.site.nomsite }}</div>
+    <div> Photo : <img src="{{ asset("avatars/" ~ user.photo) }}"> </div>
 
     <button > <a href="{{ path('sortie_index') }}">Retour</a></button>
 
