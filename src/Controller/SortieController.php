@@ -95,15 +95,20 @@ class SortieController extends AbstractController
     public function update(
         Request $request,
         Sortie $sortie,
-        SortieRepository $sortieRepository
+        SortieRepository $sortieRepository,
+        EtatsRepository $etatsRepository
     ): Response
     {
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($form->getClickedButton() === $form->get('Enregistrer')) {
+                $sortie->setEtat($etatsRepository->findOneBy(['libelle'=>'créer']));
+            }else{
+                $sortie->setEtat($etatsRepository->findOneBy(['libelle'=>'ouverte']));
+            }
             $sortieRepository->save($sortie, true);
-
             return $this->redirectToRoute('sortie_index', []);
         }
 
