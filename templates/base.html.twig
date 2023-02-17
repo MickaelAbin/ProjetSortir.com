@@ -39,11 +39,11 @@
                 <a class="navbar-item" href="{{ path('sortie_index') }}">
                     Accueil
                 </a>
-
+{% if app.user %}
                 <a class="navbar-item" href="{{ path('user_details', {'id': app.user.id}) }}">
                     Mon profil
                 </a>
-
+{% endif %}
                 <a class="navbar-item" href="{{ path('app_logout') }}"">
                 Se deconnecter
                 </a>

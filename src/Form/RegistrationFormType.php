@@ -44,7 +44,10 @@ class RegistrationFormType extends AbstractType
                 'download_uri' => false,
                 'allow_delete'  => false
             ])
-
+            ->add('current_password', PasswordType::class, [
+                'label' => 'Mot de passe actuel',
+                'mapped' => false, // ne mappe pas ce champ à l'entité User
+            ])
 
             ->add('plainPassword', RepeatedType::class, [
                 'label'=>'Mot de passe : ',
