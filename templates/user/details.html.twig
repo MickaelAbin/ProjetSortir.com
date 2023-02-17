@@ -20,9 +20,13 @@
             <img src="{{ asset("avatars/" ~ user.photo) }}">
         </section>
     </article>
-
+    {% if app.user.pseudo == user.pseudo %}
     <div class="retour">
-    <a href="{{ path('sortie_index') }}"><button class="button is-primary is-outlined"> Retour</button></a>
+        <a href="{{ path('user_modifier', {'id': app.user.id}) }}"><button class="button is-primary is-outlined"> Modifier</button></a>
+    </div>
+    {% endif %}
+    <div class="retour">
+    <a href="{{ path('sortie_index') }}"><button class="button is-primary is-outlined"> Accueil</button></a>
     </div>
 {% endblock %}
 
