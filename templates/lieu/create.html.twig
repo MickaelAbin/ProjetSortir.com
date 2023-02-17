@@ -1,11 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LieuController!{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="../{{ asset('css/CarteCss.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('Script/API_Carte.js') }}" defer ></script>
+{% endblock %}
+
+{% block title %}Ajouter un lieu{% endblock %}
 
 {% block body %}
 <h2>Ajouter votre Lieu !</h2>
 
-    {{ form_start(lieuForm) }}
-    {{ form_widget(lieuForm) }}
-    {{ form_end(lieuForm) }}
+{#    {{ form_start(lieuForm) }}#}
+{#    {{ form_widget(lieuForm) }}#}
+{#    <a href="{{ path('ville_create') }}"><img src="../{{ asset('Images/Plus.png') }}" alt="un plus pour ajouter un lieu"></a>#}
+{#    {{ form_end(lieuForm) }}#}
+
+    <div id="map"></div>
+
 {% endblock %}
