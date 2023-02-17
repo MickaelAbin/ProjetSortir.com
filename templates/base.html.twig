@@ -20,7 +20,7 @@
 
 <body>
 <header>
-    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <nav class="navbar" id="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="">
                 <img src="{{ asset ("/Images/logo.png") }}" width="60" height="60">
@@ -77,6 +77,11 @@
         </div>
     </nav>
 </header>
+<div class="logo-site">
+    <div class="gauche"></div>
+    <img src="{{ asset('Images/logo.png') }}" alt="logo-site" width="250px" height="250px">
+    <div class="droite"></div>
+</div>
 {% for label, messages in app.flashes %}
     {% for message in messages %}
         <div class="alert-{{ label }}">

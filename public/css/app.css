@@ -37,6 +37,29 @@ main{
     margin:auto;
 }
 
+
+.logo-site{
+    display: flex;
+}
+.gauche{
+    width: 40%;
+    height: 200px;
+    background-color:#191919 ;
+}
+.droite{
+    width: 40%;
+    background-color: #3A3A3A;
+    height: 200px;
+}
+.logo-site img{
+    width: 20%;
+    height: 200px;
+}
+
 h1{
     color: red;
+}
+
+.navbar{
+    background-color: #76B39D;
 }

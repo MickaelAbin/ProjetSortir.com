@@ -9,13 +9,15 @@ article{
     justify-content: space-around;
 }
 .photo_utilisateur img{
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
 }
 .retour{
-    justify-content:  center;
-    margin:auto;
+    display: flex;
+    justify-content: center;
+
 }
 .retour button{
     width: 150px;
 }
+
