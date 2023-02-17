@@ -6,30 +6,47 @@
 {% endblock %}
 
 {% block body %}
-<h1>{{ user.pseudo }}</h1>
-    <article>
-        <section class="detail">
-            <div> Prénom : {{ user.prenom }}</div>
-            <div> Nom : {{ user.nom }}</div>
-            <div> Téléphone : {{ user.telephone }}</div>
-            <div> Email : {{ user.email }}</div>
-            <div> Ville de rattachement : {{ user.site.nomsite }}</div>
-        </section>
+    <main>
+        <h1>{{ user.pseudo }}</h1>
+        <article>
+            <section class="detail">
+                <div>{{ user.prenom }}</div>
+                <div>{{ user.nom }}</div>
+                <div> {{ user.telephone }}</div>
+                <div>{{ user.email }}</div>
+                <div>{{ user.site.nomsite }}</div>
+            </section>
 
-        <section class="photo_utilisateur">
-            <img src="{{ asset("avatars/" ~ user.photo) }}">
-        </section>
-    </article>
-    {% if app.user.pseudo == user.pseudo %}
-    <div class="retour">
-        <a href="{{ path('user_modifier', {'id': app.user.id}) }}"><button class="button is-primary is-outlined"> Modifier</button></a>
-    </div>
-    {% endif %}
-    <div class="retour">
+            <section class="detail">
+                <div> Prénom :</div>
+                <div> Nom :</div>
+                <div> Téléphone :</div>
+                <div> Email :</div>
+                <div> Ville de rattachement :</div>
+            </section>
 
-    <a href="{{ path('sortie_index') }}"><button class="button is-primary is-outlined"> Accueil</button></a>
 
-    </div>
-    </div>
+            <section class="photo_utilisateur">
+                <img src="{{ asset("avatars/" ~ user.photo) }}">
+            </section>
+        </article>
+        <div class="button-profil">
+            {% if app.user.pseudo == user.pseudo %}
+                <div class="retour">
+                    <a href="{{ path('user_modifier', {'id': app.user.id}) }}">
+                        <button class="button is-rounded"> Modifier</button>
+                    </a>
+                </div>
+            {% endif %}
+            <div class="retour">
+
+                <a href="{{ path('sortie_index') }}">
+                    <button class="button is-rounded"> Accueil</button>
+                </a>
+
+            </div>
+        </div>
+        </div>
+    </main>
 {% endblock %}
 
