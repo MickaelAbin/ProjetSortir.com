@@ -1,23 +1,53 @@
+
 h1{
     text-align: center;
-    color: #0c2d50;
+    color: #00F1A1;
     font-size: 4em;
+    text-decoration: underline;
 }
 article{
     display: flex;
     flex-direction: row-reverse;
-    justify-content: space-around;
+    justify-content: center;
+    margin-top: 50px;
 }
+.detail,.photo_utilisateur{
+    color: #00F1A1;
+    font-size: 1.5em;
+    padding: 40px;
+
+}
+
 .photo_utilisateur img{
     width: 200px;
     height: 200px;
+    border: 1rem solid #00F1A1;
 }
 .retour{
     display: flex;
     justify-content: center;
 
 }
+.button-profil{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
 .retour button{
     width: 150px;
+    margin: 20px;
 }
+.button{
+    color: #00F1A1;
+    background-color:#2E2E2E;
+    border-color:#00F1A1 ;
+}
+
+.button:hover{
+    color:#2E2E2E;
+    background-color:#00F1A1;
+    border-color:#2E2E2E ;
+}
+
 
