@@ -9,12 +9,15 @@
     {{ form_row(registrationForm.nom) }}
     {{ form_row(registrationForm.telephone) }}
     {{ form_row(registrationForm.email) }}
+    {{ form_row(registrationForm.current_password) }}
     {{ form_row(registrationForm.plainPassword) }}
     {{ form_row(registrationForm.site) }}
     {{ form_row(registrationForm.imageFile) }}
-    <button type="submit" class="btn">Enregistrer</button>
-    <button > <a href="/index">Annuler</a></button>
+    <button type="submit" class="button is-primary is-outlined">Enregistrer</button>
     {{ form_end(registrationForm) }}
+    <div class="retour">
+        <a href="{{ path('sortie_index') }}"><button class="button is-primary is-outlined"> Annuler</button></a>
+    </div>
 {% endblock %}
 
 {% block title %}

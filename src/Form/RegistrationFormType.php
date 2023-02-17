@@ -39,10 +39,15 @@ class RegistrationFormType extends AbstractType
                 ]
             )
             ->add('imageFile',VichFileType::class,[
+                'label'=> 'Photo : ',
                 'required' => false,
                 'download_uri' => false,
+                'allow_delete'  => false
             ])
-
+            ->add('current_password', PasswordType::class, [
+                'label' => 'Mot de passe actuel',
+                'mapped' => false, // ne mappe pas ce champ à l'entité User
+            ])
 
             ->add('plainPassword', RepeatedType::class, [
                 'label'=>'Mot de passe : ',

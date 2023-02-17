@@ -3,3 +3,6 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+user_edit-with-password:
+    path: '/user/edit-with-password/{id}'
+    controller: App\Controller\UserController::modifier

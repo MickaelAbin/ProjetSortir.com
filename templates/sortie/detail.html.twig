@@ -12,7 +12,13 @@
     <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
     <p>Latitude : {{ sortie.lieu.latitude }}</p>
     <p>Longitude : {{ sortie.lieu.longitude }}</p>
-    <p>{{ sortie.descriptioninfos }}</p>
+    <p>
+        {% if sortie.etat.libelle == 'annulée' %}
+        Motif d'annulation :
+        {% else %}
+        Description :
+        {% endif %}
+        {{ sortie.descriptioninfos }}</p>
     <p>Nombre de participants : {{ sortie.participants | length }}/{{ sortie.nbinscriptionsmax }} , Inscriptions jusqu'au {{ sortie.datecloture | date('d/m/y') }}</p>
 
     {% for participant in sortie.participants %}

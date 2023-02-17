@@ -1,0 +1,23 @@
+h1{
+    text-align: center;
+    color: #0c2d50;
+    font-size: 4em;
+}
+article{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+}
+.photo_utilisateur img{
+    width: 200px;
+    height: 200px;
+}
+.retour{
+    display: flex;
+    justify-content: center;
+
+}
+.retour button{
+    width: 150px;
+}
+

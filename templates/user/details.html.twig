@@ -1,19 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-
+{% block title %}{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/profil.css') }}">
 {% endblock %}
 
 {% block body %}
 <h1>{{ user.pseudo }}</h1>
-    <div> Prénom : {{ user.prenom }}</div>
-    <div> Nom : {{ user.nom }}</div>
-    <div> Téléphone : {{ user.telephone }}</div>
-    <div> Email : {{ user.email }}</div>
-    <div> Ville de rattachement : {{ user.site.nomsite }}</div>
-    <div> Photo : <img src="{{ asset("avatars/" ~ user.photo) }}"> </div>
+    <article>
+        <section class="detail">
+            <div> Prénom : {{ user.prenom }}</div>
+            <div> Nom : {{ user.nom }}</div>
+            <div> Téléphone : {{ user.telephone }}</div>
+            <div> Email : {{ user.email }}</div>
+            <div> Ville de rattachement : {{ user.site.nomsite }}</div>
+        </section>
 
-    <button > <a href="{{ path('sortie_index') }}">Retour</a></button>
+        <section class="photo_utilisateur">
+            <img src="{{ asset("avatars/" ~ user.photo) }}">
+        </section>
+    </article>
+    {% if app.user.pseudo == user.pseudo %}
+    <div class="retour">
+        <a href="{{ path('user_modifier', {'id': app.user.id}) }}"><button class="button is-primary is-outlined"> Modifier</button></a>
+    </div>
+    {% endif %}
+    <div class="retour">
 
+    <a href="{{ path('sortie_index') }}"><button class="button is-primary is-outlined"> Accueil</button></a>
+
+    </div>
+    </div>
 {% endblock %}
 
