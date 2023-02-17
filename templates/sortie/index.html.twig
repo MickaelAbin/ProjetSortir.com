@@ -43,6 +43,7 @@
                 <td>
                     {% if sortie.etat.libelle != 'créer' %}
                     <a href="{{ path('sortie_detail', {'id': sortie.id}) }}">Afficher</a>
+
                     {% endif %}
 
                     {% if app.user.nom ==  sortie.organisateur.nom and sortie.etat.libelle =='créer'  %}
@@ -52,6 +53,7 @@
 
                     {% if sortie.etat.libelle == 'ouverte' and app.user.nom == sortie.organisateur.nom  %}
                         <a href="{{ path('sortie_detailannulation', {'id': sortie.id}) }}">Annuler</a>
+
                     {% endif %}
 
                     {% if app.user.nom != sortie.organisateur.nom%}

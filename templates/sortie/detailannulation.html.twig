@@ -7,14 +7,20 @@
     <p>Lieu : {{ sortie.lieu.nomLieu }}</p>
     <p>Rue : {{ sortie.lieu.rue }}</p>
     <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
-    <p>Motif : <form action="{{ path('sortie_detailannulation',{'id': sortie.id}) }}"><input type="textarea" name="motif">
-    <button type="submit" name="valide" class="btn">Enregistrer</button>
-</form></p>
+    <form action="{{ path('sortie_detailannulation',{'id': sortie.id}) }}"><label>Motif :
+        <input type="text" name="motif">
+    </label>
+    <div class="retour">
+       <button type="submit" name="valide" class="button is-primary is-outlined"> Enregistrer </button>
+    </div>
+</form>
 
 
 
+    <div class="retour">
+        <a href="{{ path('sortie_index') }}"><button class="button is-primary is-outlined"> Annuler</button></a>
+    </div>
 
-    <a href="{{ path('sortie_index') }}">Annuler</a>
 
 
 {% endblock %}
