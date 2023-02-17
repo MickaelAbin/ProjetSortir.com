@@ -39,8 +39,10 @@ class RegistrationFormType extends AbstractType
                 ]
             )
             ->add('imageFile',VichFileType::class,[
+                'label'=> 'Photo : ',
                 'required' => false,
                 'download_uri' => false,
+                'allow_delete'  => false
             ])
 
 

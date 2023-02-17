@@ -33,11 +33,11 @@ class UserController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
+            $this->addFlash('succes',' Modification(s) effectuée(s) ');
 
-
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('user_details',['id' => $user->getId()]);
         }
-
+        $this->addFlash('echec',' Modification(s) non effectuée(s) ');
         return $this->render('user/modifier.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
