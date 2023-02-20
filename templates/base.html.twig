@@ -11,12 +11,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 
     {% block javascripts %}
+        <script src="//code.jquery.com/jquery.js"></script>
+        <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
@@ -25,9 +29,9 @@
 <header>
     <nav class="navbar" id="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" href="">
-                <img src="{{ asset ("/Images/logo.png") }}" width="60" height="60">
-            </a>
+{#            <a class="navbar-item" href="">#}
+{#                <img src="{{ asset ("/Images/logo.png") }}" width="60" height="60">#}
+{#            </a>#}
 
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
                data-target="navbarBasicExample">
@@ -50,7 +54,7 @@
                 {% endif %}
 
 
-                <a class="navbar-item" href="{{ path('app_logout') }}"">
+                <a class="navbar-item" href="{{ path('app_logout') }}">
                 Se deconnecter
                 </a>
 
@@ -83,19 +87,21 @@
         </div>
     </nav>
 </header>
+
 <div class="logo-site">
     <div class="gauche"></div>
     <img src="{{ asset('Images/logo.png') }}" alt="logo-site" width="250px" height="250px">
     <div class="droite"></div>
 </div>
-{% for label, messages in app.flashes %}
-    {% for message in messages %}
-        <div class="alert-{{ label }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endfor %}
+{#{% for label, messages in app.flashes %}#}
+{#    {% for message in messages %}#}
+{#        <div class="alert-{{ label }}">#}
+{#            {{ message }}#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#{% endfor %}#}
 {% block body %}{% endblock %}
+{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 <footer></footer>
 </body>
 </html>

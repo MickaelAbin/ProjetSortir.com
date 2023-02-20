@@ -2,6 +2,7 @@
 
 {% block javascripts %}
     <script src="{{ asset('Script/Detail_Sortie.js') }}" defer></script>
+    <script src="{{ asset('/Script/compteRebours.js') }}"></script>
 {% endblock %}
 
 {% block title %}Sortie{% endblock %}
@@ -9,6 +10,8 @@
 {% block body %}
 
     <h1>{{ sortie.nom }}</h1>
+    <p id="affichage"></p>
+    <input type="hidden" id="dateDebut">{{ sortie.datedebut |date('d-m-Y-H-i-s') }}</input>
 
     <p id="ville">Le {{ sortie.datedebut | date('d/m/y') }} à {{ sortie.datedebut | date('H:i') }} dans la ville de </p>
     <p>Lieu : {{ sortie.lieu.nomLieu }}</p>

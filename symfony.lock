@@ -44,6 +44,14 @@
             "ref": "b131e6cbfe1b898a508987851963fff485986285"
         }
     },
+
+    "knplabs/knp-paginator-bundle": {
+        "version": "v6.1.1"
+
+    "mercuryseries/flashy-bundle": {
+        "version": "v5.1.0"
+
+    },
     "phpunit/phpunit": {
         "version": "10.0",
         "recipe": {

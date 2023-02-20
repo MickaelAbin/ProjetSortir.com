@@ -1,23 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Mon profil</h1>
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/profil.css') }}">{% endblock %}
 
-    {{ form_start(registrationForm) }}
-    {{ form_row(registrationForm.pseudo) }}
-    {{ form_row(registrationForm.prenom) }}
-    {{ form_row(registrationForm.nom) }}
-    {{ form_row(registrationForm.telephone) }}
-    {{ form_row(registrationForm.email) }}
-    {{ form_row(registrationForm.current_password) }}
-    {{ form_row(registrationForm.plainPassword) }}
-    {{ form_row(registrationForm.site) }}
-    {{ form_row(registrationForm.imageFile) }}
-    <button type="submit" class="button is-primary is-outlined">Enregistrer</button>
-    {{ form_end(registrationForm) }}
-    <div class="retour">
-        <a href="{{ path('sortie_index') }}"><button class="button is-primary is-outlined"> Annuler</button></a>
-    </div>
+{% block body %}
+    <main>
+        <h1>Mon profil</h1>
+        <div class="form-modification-profil">
+            <div class="position-form">
+                {{ form_start(registrationForm) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(registrationForm.pseudo) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(registrationForm.prenom) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(registrationForm.nom) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(registrationForm.telephone) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(registrationForm.email) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(registrationForm.current_password) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(registrationForm.plainPassword) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(registrationForm.site) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(registrationForm.imageFile) }}
+            </div>
+        </div>
+        <div class="button-modifier-profil">
+            <button type="submit" class="button is-rounded">Enregistrer</button>
+            {{ form_end(registrationForm) }}
+            <div class="retour-profil">
+                <a href="{{ path('sortie_index') }}">
+                    <button class="button is-rounded"> Annuler</button>
+                </a>
+            </div>
+        </div>
+    </main>
 {% endblock %}
 
 {% block title %}

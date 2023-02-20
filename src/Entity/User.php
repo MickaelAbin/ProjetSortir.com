@@ -40,12 +40,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
 
-    #[Assert\Length([],min: 8, max: 100, minMessage: '8 caractères minimun', maxMessage: '50 caractères maximum')]
-
+    #[Assert\Length([], min: 8, max: 100, minMessage: '8 caractères minimun', maxMessage: '50 caractères maximum')]
     #[ORM\Column]
     private ?string $password = null;
 
-    #[Assert\Length([],min: 4, max: 30, minMessage: '4 caractères minimun', maxMessage: '30 caractères maximum')]
+    #[Assert\Length([], min: 4, max: 30, minMessage: '4 caractères minimun', maxMessage: '30 caractères maximum')]
     #[Assert\NotBlank]
     #[ORM\Column(length: 30)]
     private ?string $pseudo = null;
@@ -59,7 +58,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     #[ORM\Column(length: 30)]
     private ?string $prenom = null;
-#[Assert\Regex("/^0[1-9]\d{8}$/",message: "Le numéro de téléphone {{ value }} n'est pas un numéro de téléphone valide en France.")]
+    #[Assert\Regex("/^0[1-9]\d{8}$/", message: "Le numéro de téléphone {{ value }} n'est pas un numéro de téléphone valide en France.")]
     #[ORM\Column(length: 15, nullable: true)]
     private ?string $telephone = null;
 
@@ -77,13 +76,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Sortie::class, inversedBy: 'participants')]
     private Collection $participant;
 
-    #[ORM\Column( nullable: true)]
-    private  $photo = null;
+    #[ORM\Column(nullable: true)]
+    private $photo = null;
 
-
-    #[Vich\UploadableField(mapping: 'user_avatar',fileNameProperty: 'photo')]
-    private  $imageFile ;
-
+    #[assert\File(maxSize: "2M", maxSizeMessage: ' 2 mega max pour une photo')]
+    #[Vich\UploadableField(mapping: 'user_avatar', fileNameProperty: 'photo')]
+    private $imageFile;
 
 
     public function __construct()
@@ -116,7 +114,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -294,7 +292,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->photo;
     }
 
-    public function setPhoto( $photo)
+    public function setPhoto($photo)
     {
         $this->photo = $photo;
 
@@ -315,7 +313,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         return $this;
     }
-    public function __serialize(): array    {
+
+    public function __serialize(): array
+    {
         return [
             'id' => $this->id,
             'email' => $this->email,
@@ -323,9 +323,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             'password' => $this->password,
         ];
     }
-
-
-
 
 
 }
