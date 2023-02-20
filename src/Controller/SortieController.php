@@ -13,6 +13,7 @@ use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use App\Service\SortieService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +27,8 @@ class SortieController extends AbstractController
     public function index(
         SortieRepository $sortieRepository,
         SiteRepository $siteRepository,
-        Request $request
+        Request $request,
+        PaginatorInterface $paginator
     ): Response
     {
         $filtreForm = $this->createForm(FiltreType::class);
@@ -34,14 +36,18 @@ class SortieController extends AbstractController
 
         if ($filtreForm->isSubmitted()) {
             $sortie = (new SortieService($sortieRepository))->findSortieWithFiltre($filtreForm, $this->getUser()->getUserIdentifier());
+
         }else {
             $sortie = $sortieRepository->findAll();
         }
-        dump($sortie);
-        dump($filtreForm->getData());
-        dump($this->getUser()->getUserIdentifier());
+        $affichage=$paginator->paginate(
+            $sortie,
+            $request->query->getInt('page',1),
+            8
+        );
+
         return $this->render('sortie/index.html.twig', [
-            'sorties' => $sortie,
+            'sorties' => $affichage,
             'sites' => $siteRepository->findAll(),
             'filtreForm' => $filtreForm
         ]);

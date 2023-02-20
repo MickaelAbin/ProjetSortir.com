@@ -5,6 +5,7 @@ h1{
     font-size: 4em;
     text-decoration: underline;
 }
+
 article{
     display: flex;
     flex-direction: row-reverse;
@@ -49,5 +50,65 @@ article{
     background-color:#00F1A1;
     border-color:#2E2E2E ;
 }
+
+
+.button-modifier-profil{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin-top: 25px;
+
+}.button-modifier-profil button{
+    width: 150px;
+    margin: 20px;
+ }
+ .form-modification-profil{
+     display: flex;
+     margin: auto;
+     flex-direction: column;
+     width: 60%;
+ }
+ .form-modification-profil div{
+
+     font-size: 1.5em;
+
+ }
+ .form-modification-profil label{
+     text-align: left;
+     color: #00F1A1;
+ }
+
+ .form-modification-profil input, .form-modification-profil select{
+     width: 200px;
+     height: 30px;
+ }
+ .position-form div{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin: auto;
+ }
+
+ .position-form div *{
+     width: 100%;
+ }
+ .position-password{
+     display: flex;
+     flex-direction: column;
+ }
+.form-modification-profil select{
+    border-color:#00F1A1 ;
+}
+
+.vich-file input{
+    color:#00F1A1 ;
+    width: 200px;
+}
+#registration_form_imageFile_file{
+    width: 100%;
+}
+
+
 
 

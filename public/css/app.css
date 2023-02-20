@@ -6,7 +6,24 @@ main{
 header{
     color: #9AFBF9;
 }
+h1{
+    font-size: 3em;
+    color:#00F1A1 ;
+    text-align: center;
+    margin: auto;
+    text-decoration: underline;
+}
+h2{
+    color: #00F1A1;
+    font-size: 1.2em;
+    font-style: oblique;
+    font-weight: bold;
+    text-align: center;
 
+}
+p{
+    color: #00F1A1;
+}
 
 
 
@@ -34,6 +51,11 @@ header{
     width: 150px;
     align-content: center;
     margin:auto;
+    color: #00F1A1;
+}
+#button_connexion:hover{
+    background-color: #00F1A1;
+    color: white;
 }
 
 
@@ -55,15 +77,9 @@ header{
     height: 200px;
 
 }
-
-h1{
-    color: red;
-}
-
 .navbar{
     background-color: #2E2E2E;
 }
-
 .navbar-item{
     color: #00F1A1;
 }
@@ -71,6 +87,24 @@ h1{
 footer{
     background-color:#6DB9FF ;
     height: 10vh;
+}
+.input{
+    border-color: #00F1A1;
+}
+.input:hover{
+    border-color: #00F1A1;
+}
+
+.checkbox:hover{
+    color: #00F1A1;
+}
+
+input{
+    border-color: #00F1A1;
+}
+
+label{
+    color:#00F1A1;
 }
 
 

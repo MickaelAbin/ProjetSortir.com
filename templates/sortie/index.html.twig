@@ -1,80 +1,144 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/sorties.css') }}">
+
+{% endblock %}
 
 {% block title %}Sortie index{% endblock %}
 
 {% block body %}
+    <main>
+
+        <section class="entete">
+            <p>Date du jour : {{ 'now' | date('d/m/Y') }}</p>
+            <div class="identifiant"><p>Participant : {{ app.user.pseudo }}</p></div>
+        </section>
+        <h2>Filtrer les sorties</h2>
+
+        <section class="formulaire-recherche">
 
 
-    <h1>Sortie index</h1>
-    <p>Date du jour : {{ 'now' | date('d/m/Y') }}</p>
-    <div class="identifiant"><p>Participant : {{ app.user.pseudo }}</p></div>
+            <div class="block-1">
+                {{ form_start(filtreForm) }}
+                <div>
+                    {{ form_label(filtreForm.site) }}
+                    {{ form_widget(filtreForm.site) }}
+                </div>
+                <div>
+                    {{ form_label(filtreForm.recherche) }}
+                    {{ form_widget(filtreForm.recherche) }}
+                </div>
+                <div>
+                    {{ form_label(filtreForm.dateDepart) }}
+                    {{ form_widget(filtreForm.dateDepart) }}
+                </div>
+                <div>
+                    {{ form_label(filtreForm.dateFin) }}
+                    {{ form_widget(filtreForm.dateFin) }}
+                </div>
+            </div>
+            <div class="block-2">
+                <div>
+                    {{ form_widget(filtreForm.organise) }}
+                    {{ form_label(filtreForm.organise) }}
+                </div>
+                <div>
+                    {{ form_widget(filtreForm.inscrit) }}
+                    {{ form_label(filtreForm.inscrit) }}
+                </div>
+                <div>
+                    {{ form_widget(filtreForm.nonInscrit) }}
+                    {{ form_label(filtreForm.nonInscrit) }}
+                </div>
+                <div>
+                    {{ form_widget(filtreForm.passe) }}
+                    {{ form_label(filtreForm.passe) }}
+                </div>
+            </div>
+            <div class="block-3">
+            {{ form_label(filtreForm.valide) }}
+            {{ form_widget(filtreForm.valide) }}
+            </div>
+            {{ form_end(filtreForm) }}
+        </section>
 
 
-    {{ form_start(filtreForm) }}
-    {{ form_widget(filtreForm) }}
-    {{ form_end(filtreForm) }}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nom de la sortie</th>
-                <th>Date de la sortie</th>
-                <th>Clôture</th>
-                <th>Inscrits/Places</th>
-                <th>Etat</th>
-                <th>Inscrit</th>
-                <th>Organisateur</th>
-                <th>actions</th>
+        <section class="affichage-sorties">
 
-            </tr>
-        </thead>
-        <tbody>
-        {% for sortie in sorties %}
-            {% if sortie.organisateur.nom == app.user.nom or sortie.etat.libelle!='créer' %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Clôture</th>
+                    <th>Inscrits/Places</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>actions</th>
 
-            <tr>
-                <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ sortie.participants | length }}/{{ sortie.nbinscriptionsmax }}</td>
-                <td>{{ sortie.etat.libelle }}</td>
-                <td>{% if sortie.participants.contains(app.user) %}<img src="../{{ asset('Images/validationInscription.png') }}" alt="image validation" width="20px" height="20px">{% endif %}</td>
-                <td><a href="{{ path('user_details',{'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }}</a></td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for sortie in sorties %}
+                    {% if sortie.organisateur.nom == app.user.nom or sortie.etat.libelle!='créer' %}
 
-                <td>
-                    {% if sortie.etat.libelle != 'créer' %}
-                    <a href="{{ path('sortie_detail', {'id': sortie.id}) }}">Afficher</a>
+                        <tr>
+                            <td>{{ sortie.nom }}</td>
+                            <td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ sortie.participants | length }}/{{ sortie.nbinscriptionsmax }}</td>
+                            <td>{{ sortie.etat.libelle }}</td>
+                            <td>{% if sortie.participants.contains(app.user) %}<img
+                                    src="../{{ asset('Images/validationInscription.png') }}" alt="image validation"
+                                    width="20px" height="20px">{% endif %}</td>
+                            <td>
+                                <a href="{{ path('user_details',{'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }}</a>
+                            </td>
 
+                            <td>
+                                {% if sortie.etat.libelle != 'créer' %}
+                                    <a href="{{ path('sortie_detail', {'id': sortie.id}) }}">Afficher</a>
+
+                                {% endif %}
+
+                                {% if app.user.nom ==  sortie.organisateur.nom and sortie.etat.libelle =='créer' %}
+                                    <a href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
+                                    <a href="">Publier</a>
+                                {% endif %}
+
+                                {% if sortie.etat.libelle == 'ouverte' and app.user.nom == sortie.organisateur.nom %}
+                                    <a href="{{ path('sortie_detailannulation', {'id': sortie.id}) }}">Annuler</a>
+
+                                {% endif %}
+
+                                {% if app.user.nom != sortie.organisateur.nom %}
+
+                                    {% if sortie.participants.contains(app.user) %}
+                                        <a href="{{ path('sortie_desister', {'id': sortie.id}) }}">Se désister</a>
+                                    {% else %}
+                                        <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
                     {% endif %}
+                {% else %}
+                    <tr>
+                        <td colspan="9">no records found</td>
+                    </tr>
 
-                    {% if app.user.nom ==  sortie.organisateur.nom and sortie.etat.libelle =='créer'  %}
-                             <a href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
-                            <a href="">Publier</a>
-                    {% endif %}
-
-                    {% if sortie.etat.libelle == 'ouverte' and app.user.nom == sortie.organisateur.nom  %}
-                        <a href="{{ path('sortie_detailannulation', {'id': sortie.id}) }}">Annuler</a>
-
-                    {% endif %}
-
-                    {% if app.user.nom != sortie.organisateur.nom%}
-
-                     {% if sortie.participants.contains(app.user) %}
-                        <a href="{{ path('sortie_desister', {'id': sortie.id}) }}">Se désister</a>
-                    {% else %}
-                    <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
-                     {% endif %}
-                        {% endif %}
-                </td>
-            </tr>
-            {% endif %}
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('sortie_create') }}"><button class="button is-primary is-outlined">Créer une sortie</button></a>
+                {% endfor %}
+                {{ knp_pagination_render(sorties) }}
+                </tbody>
+            </table>
+        </section>
+        <div >
+            <div class="button-creation-sortie">
+        <a href="{{ path('sortie_create') }}">
+            <button class="button  is-rounded" id="bouton-creation-sortie">Créer une sortie</button>
+        </a>
+        </div>
+        </div>
+    </main>
 {% endblock %}

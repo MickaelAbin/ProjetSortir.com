@@ -42,10 +42,10 @@ class RegistrationFormType extends AbstractType
                 'label'=> 'Photo : ',
                 'required' => false,
                 'download_uri' => false,
-                'allow_delete'  => false
+                'allow_delete'  => false,
             ])
             ->add('current_password', PasswordType::class, [
-                'label' => 'Mot de passe actuel',
+                'label' => 'Mot de passe actuel : ',
                 'mapped' => false, // ne mappe pas ce champ à l'entité User
             ])
 
