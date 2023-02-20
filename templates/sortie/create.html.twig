@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    <script src=""></script>
+{% endblock %}
+
 {% block title %}New Sortie{% endblock %}
 
 {% block body %}
@@ -11,6 +15,11 @@
     <a href="{{ path('lieu_create') }}"><img src="../{{ asset('Images/Plus.png') }}" alt="un plus pour ajouter un lieu"></a>
 
     {{ form_end(sortieForm) }}
+
+    <input type="hidden" id="longitude">
+    <input type="hidden" id="latitude">
+
+    <div id="map"></div>
 
     <a href="{{ path('sortie_index') }}">Retour à la liste</a>
 {% endblock %}

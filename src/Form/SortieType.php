@@ -32,7 +32,7 @@ class SortieType extends AbstractType
             ])
             ->add('duree')
 
-            ->add('datecloture', DateTimeType::class,[
+            ->add('datecloture', DateType::class,[
                 'html5' => true,
                 'widget' => 'single_text',
                 'label' => "Date limite d'inscription : "
@@ -43,16 +43,6 @@ class SortieType extends AbstractType
                 'class' => Lieu::class,
                 'choice_label' => 'nom_lieu',
                 'label' => 'Lieu : '
-            ])
-            ->add('latitude', TextType::class, [
-                'mapped' => false,
-                'required'=>false,
-                'label' => 'Latitude : '
-            ])
-            ->add('longitude', TextType::class, [
-                'mapped' => false,
-                'required'=> false,
-                'label' => 'Longitude : '
             ])
             ->add('Enregistrer',SubmitType::class,['label'=>'Enregistrer'])
             ->add('Publier',SubmitType::class,['label'=>'Publier'])

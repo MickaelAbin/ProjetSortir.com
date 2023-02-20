@@ -54,8 +54,6 @@ class SortieRepository extends ServiceEntityRepository
             ->addSelect('u')
             ->innerJoin(Lieu::class, 'l', Join::WITH, 's.lieu = l.id')
             ->addSelect('l')
-            ->innerJoin(Ville::class, 'v', Join::WITH, 'l.ville = v.id')
-            ->addSelect('v')
             ->andWhere('s.id = :val')
             ->setParameter('val', $id)
             ->orderBy('u.nom', 'DESC')

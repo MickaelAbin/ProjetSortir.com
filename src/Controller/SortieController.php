@@ -49,8 +49,6 @@ class SortieController extends AbstractController
             8
         );
 
-
-
         return $this->render('sortie/index.html.twig', [
             'sorties' => $affichage,
             'sites' => $siteRepository->findAll(),
