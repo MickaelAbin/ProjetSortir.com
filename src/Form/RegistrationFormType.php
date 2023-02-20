@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Site;
 use App\Entity\User;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -45,7 +46,10 @@ class RegistrationFormType extends AbstractType
                 'allow_delete'  => false,
             ])
             ->add('current_password', PasswordType::class, [
-                'label' => 'Mot de passe actuel : ',
+
+                'label' => 'Mot de passe actuel',
+                'required' => false,
+
                 'mapped' => false, // ne mappe pas ce champ à l'entité User
             ])
 
@@ -54,7 +58,7 @@ class RegistrationFormType extends AbstractType
                 'type'=> PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent correspondre',
                 'options' => ['attr' => ['class' => 'password-field']],
-                'required' => true,
+                'required' => false,
                 'first_options'  => ['label' => 'Mot de passe : '],
                 'second_options' => ['label' => 'Confirmer le mot de passe : '],
                 // instead of being set onto the object directly,
