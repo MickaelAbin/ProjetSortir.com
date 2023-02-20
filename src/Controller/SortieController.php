@@ -13,6 +13,7 @@ use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use App\Service\SortieService;
 use Doctrine\ORM\EntityManagerInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,9 +38,7 @@ class SortieController extends AbstractController
         }else {
             $sortie = $sortieRepository->findAll();
         }
-        dump($sortie);
-        dump($filtreForm->getData());
-        dump($this->getUser()->getUserIdentifier());
+
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortie,
             'sites' => $siteRepository->findAll(),
@@ -49,6 +48,7 @@ class SortieController extends AbstractController
 
     #[Route('/create', name: '_create')]
     public function create(
+        FlashyNotifier $flashy,
         Request $request,
         SortieRepository $sortieRepository,
         UserRepository $userRepository,
@@ -67,8 +67,11 @@ class SortieController extends AbstractController
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             if($sortieForm->getClickedButton() === $sortieForm->get('Enregistrer')) {
                 $sortie->setEtat($etatsRepository->findOneBy(['libelle'=>'créer']));
+                $flashy->success(' Sortie créée ');
+
             }else{
                 $sortie->setEtat($etatsRepository->findOneBy(['libelle'=>'ouverte']));
+                $flashy->success(' Sortie publiée ');
             }
             $sortieRepository->save($sortie, true);
             return $this->redirectToRoute('sortie_index', []);
@@ -78,6 +81,19 @@ class SortieController extends AbstractController
             'sortieForm' => $sortieForm
         ]);
     }
+    #[Route('/publier/{id}', name: '_publier')]
+    public function publier(
+        Request $request,
+        Sortie $sortie,
+        SortieRepository $sortieRepository,
+        EtatsRepository $etatsRepository
+    ): Response
+    {
+                $sortie->setEtat($etatsRepository->findOneBy(['libelle'=>'ouverte']));
+                $sortieRepository->save($sortie, true);
+                return $this->redirectToRoute('sortie_index', []);
+        }
+
 
     #[Route('/detail/{id}', name: '_detail')]
     public function detail(
@@ -166,6 +182,7 @@ class SortieController extends AbstractController
 
     #[Route('/inscription/{id}', name: '_inscription')]
     public function inscription(
+        FlashyNotifier              $flashy,
         EntityManagerInterface $em,
         SortieRepository $sortieRepository,
         UserRepository $userRepository,
@@ -180,14 +197,15 @@ class SortieController extends AbstractController
             $sortie->addParticipant($user);
             $em->persist($sortie);
             $em->flush();
-            $this->addFlash('succes','Vous êtes bien inscrit');
+            $flashy->success(' Inscription validée ');
                 return $this->redirectToRoute('sortie_index', []);
         }
-            $this->addFlash('echec','Vous ne pouvez pas vous inscrire à cette sortie');
+            $flashy->error('Vous ne pouvez pas vous inscrire à cette sortie');
                 return $this->redirectToRoute('sortie_index', []);
     }
 #[Route('/desister/{id}',name:'_desister')]
     public function desister(
+        FlashyNotifier              $flashy,
         EntityManagerInterface $em,
         SortieRepository $sortieRepository,
         UserRepository $userRepository,
@@ -202,10 +220,11 @@ class SortieController extends AbstractController
         $sortie->removeParticipant($user);
         $em->persist($sortie);
         $em->flush();
-        $this->addFlash('retrait', 'Vous ne participez plus à la sortie' . $sortie->getNom());
+        $flashy->success(' Désistement validé ');
         return $this->redirectToRoute('sortie_index', []);
     }
-    $this->addFlash('retrait', 'Vous ne pouvez pas vous désinscrire de la sortie: ' . $sortie->getNom());
+    $flashy->error('Vous ne pouvez pas vous désinscrire de la sortie');
+
     return $this->redirectToRoute('sortie_index', []);
 }
 }
