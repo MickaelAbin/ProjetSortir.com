@@ -1,0 +1,87 @@
+
+
+.entete{
+    text-align: right;
+    margin-right: 10vh;
+    padding-top: 20px;
+
+}
+.pagination{
+    width: 20%;
+    justify-items: center;
+    margin:auto;
+    margin-top: 20px;
+}
+.pagination *{
+    color: white;
+}
+.pagination *:hover{
+    color: #00F1A1;
+}
+
+.formulaire-recherche{
+    width: 90%;
+    display: flex;
+    margin: auto;
+    margin-top: 20px;
+}
+.block-1{
+    width: 35%;
+}
+.block-2{
+    width: 35%;
+}
+.block-3{
+    display: flex;
+    width: 20%;
+    justify-items: center;
+}
+
+.affichage-sorties {
+
+}
+
+.table{
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+}
+#filtre_valide{
+    width: 200px;
+    height: 60px;
+    background-color:#00F1A1 ;
+    justify-items: center;
+    margin: auto;
+}
+#filtre_valide:hover{
+    box-shadow: 10px 10px black;
+
+}
+table{
+    border: 4px solid #00F1A1;
+
+}
+
+.button-creation-sortie{
+    display: flex;
+   justify-content: center;
+    margin-top: 30px;
+}
+
+#bouton-creation-sortie{
+    color: #00F1A1;
+    border-color: #00F1A1;
+    background-color:#2E2E2E ;
+}
+#bouton-creation-sortie:hover{
+    background-color: #00F1A1;
+    color: white;
+}
+
+
+
+
+
+
+
+
