@@ -1,17 +1,21 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    <script src="{{ asset('Script/Detail_Sortie.js') }}" defer></script>
+{% endblock %}
+
 {% block title %}Sortie{% endblock %}
 
 {% block body %}
 
     <h1>{{ sortie.nom }}</h1>
 
-    <p>Le {{ sortie.datedebut | date('d/m/y') }} à {{ sortie.datedebut | date('H:i') }} dans la ville de {{ sortie.lieu.ville.nomVille }}</p>
+    <p id="ville">Le {{ sortie.datedebut | date('d/m/y') }} à {{ sortie.datedebut | date('H:i') }} dans la ville de </p>
     <p>Lieu : {{ sortie.lieu.nomLieu }}</p>
-    <p>Rue : {{ sortie.lieu.rue }}</p>
-    <p>Code postal : {{ sortie.lieu.ville.codePostal }}</p>
-    <p>Latitude : {{ sortie.lieu.latitude }}</p>
-    <p>Longitude : {{ sortie.lieu.longitude }}</p>
+    <p id="adresse">Adresse : </p>
+    <p id="codePostal">Code postal : </p>
+    <input type="hidden" id="longitude" value="{{ sortie.lieu.longitude }}">
+    <input type="hidden" id="latitude" value="{{ sortie.lieu.latitude }}">
     <p>
         {% if sortie.etat.libelle == 'annulée' %}
         Motif d'annulation :
@@ -21,12 +25,15 @@
         {{ sortie.descriptioninfos }}</p>
     <p>Nombre de participants : {{ sortie.participants | length }}/{{ sortie.nbinscriptionsmax }} , Inscriptions jusqu'au {{ sortie.datecloture | date('d/m/y') }}</p>
 
-    {% for participant in sortie.participants %}
+    <div>
+        {% for participant in sortie.participants %}
 
-        <a href="{{ path('user_details', {'id': participant.id}) }}" title="vue participant">
-            <p>{{ participant.nom }}</p>
-        </a>
-    {% endfor %}
+            <a href="{{ path('user_details', {'id': participant.id}) }}" title="vue participant">
+                <p>{{ participant.nom }}</p>
+            </a>
+        {% endfor %}
+        <div id="map"></div>
+    </div>
 
     <a href="{{ path('sortie_index') }}">retour à la liste</a>
 

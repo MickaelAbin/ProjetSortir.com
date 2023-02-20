@@ -37,9 +37,6 @@ class SortieController extends AbstractController
         }else {
             $sortie = $sortieRepository->findAll();
         }
-        dump($sortie);
-        dump($filtreForm->getData());
-        dump($this->getUser()->getUserIdentifier());
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortie,
             'sites' => $siteRepository->findAll(),
