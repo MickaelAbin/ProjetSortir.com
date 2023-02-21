@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\MdpmodifierType;
+use App\Form\ModifProfilType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,7 +32,7 @@ class UserController extends AbstractController
 //        $user = $this->getUser();
         $user = $userRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
 
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(ModifProfilType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && ($form->isValid()) ) {
@@ -42,6 +44,46 @@ class UserController extends AbstractController
                     $flashy->error(' Mauvais mot de passe actuel, modification(s) non effectuée(s) ');
                     return $this->redirectToRoute('user_modifier',);
                 }
+
+            // Mettez à jour les données de l'utilisateur
+
+
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $flashy->success(' Modification(s)  effectuée(s) ');
+            return $this->redirectToRoute('user_details', ['id' => $user->getId()]);
+        }
+        return $this->render('user/modifier.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+
+    }
+    #[Route('/mdp', name: 'mdp_modifier')]
+    public function modifiermdp(
+        FlashyNotifier              $flashy,
+        Request                     $request,
+        Security                    $security,
+        UserPasswordHasherInterface $userPasswordHasher,
+        EntityManagerInterface      $entityManager,
+        UserRepository              $userRepository
+    ): Response
+    {
+//        $user = $this->getUser();
+        $user = $userRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+
+        $form = $this->createForm(MdpmodifierType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && ($form->isValid()) ) {
+//             Vérifiez si le mot de passe actuel est correct
+            $currentPassword = $form->get('current_password')->getData();
+            if (!$userPasswordHasher->isPasswordValid($user, $currentPassword)) {
+
+//
+                $flashy->error(' Mauvais mot de passe actuel, modification(s) non effectuée(s) ');
+                return $this->redirectToRoute('mdp_modifier',);
+            }
 
             // Mettez à jour les données de l'utilisateur
 
@@ -57,12 +99,11 @@ class UserController extends AbstractController
             $flashy->success(' Modification(s)  effectuée(s) ');
             return $this->redirectToRoute('user_details', ['id' => $user->getId()]);
         }
-        return $this->render('user/modifier.html.twig', [
+        return $this->render('mdp/modifier.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
 
     }
-
     #[
         Route('user/details/{id}', name: 'user_details')]
     public function details(

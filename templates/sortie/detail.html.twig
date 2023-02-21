@@ -6,17 +6,16 @@
 
 {% block javascripts %}
     <script src="{{ asset('Script/Detail_Sortie.js') }}" defer></script>
-    <script src="{{ asset('/Script/compteRebours.js') }}"></script>
+    <script src="{{ asset('Script/compteRebours.js') }}"></script>
 {% endblock %}
 
 {% block title %}Sortie{% endblock %}
 
 {% block body %}
-
-
+<main>
     <h1>{{ sortie.nom }}</h1>
     <p id="affichage"></p>
-    <input type="hidden" id="dateDebut">{{ sortie.datedebut |date('d-m-Y-H-i-s') }}</input>
+    <input type="hidden" id="dateDebut" value=" {{ sortie.datecloture |date('d M H:i:s Y') }}">
 
     <p id="ville">Le {{ sortie.datedebut | date('d/m/y') }} à {{ sortie.datedebut | date('H:i') }} dans la ville de </p>
     <p>Lieu : {{ sortie.lieu.nomLieu }}</p>
@@ -47,5 +46,5 @@
     <a href="{{ path('sortie_index') }}">retour à la liste</a>
 
     <a href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
-
+</main>
 {% endblock %}
