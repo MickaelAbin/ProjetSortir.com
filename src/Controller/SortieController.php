@@ -39,7 +39,7 @@ class SortieController extends AbstractController
 
         if ($filtreForm->isSubmitted()) {
             $user = $userRepository->find($this->getUser());
-            $sortie = (new SortieService($sortieRepository))->findSortieWithFiltre($filtreForm, $user);
+            $sortie = $sortieRepository->findSortieWithFiltre($filtreForm->getData(), $user);
 
         }else {
             $sortie = $sortieRepository->findAll();
