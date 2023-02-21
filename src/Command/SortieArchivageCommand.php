@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Etats;
 use App\Entity\Sortie;
 use App\Repository\EtatsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,18 +33,20 @@ class SortieArchivageCommand extends Command
     {
         $repository = $this->entityManager->getRepository(Sortie::class);
         $sorties = $repository->createQueryBuilder('s')
-            ->where('s.etat = :etat')
+            ->join('s.etat', 'e')
+            ->where('e.libelle = :etatOuvert')
             ->andWhere('s.datedebut < :date')
             ->setParameters([
-                'etat' => 'ouvert',
+                'etatOuvert' => 'ouverte',
                 'date' => new \DateTime('-1 month')
             ])
             ->getQuery()
             ->getResult();
 
+        $etatArchivé = $this->entityManager->getRepository(Etats::class)->findOneBy(['libelle' => 'archivé']);
+
         foreach ($sorties as $sortie) {
-            $etatsRepository = null;
-            $sortie->setEtat($etatsRepository->findOneBy(['libelle'=>'archivé']));
+            $sortie->setEtat($etatArchivé);
             $this->entityManager->persist($sortie);
         }
 
