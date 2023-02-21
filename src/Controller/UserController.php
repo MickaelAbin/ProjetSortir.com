@@ -81,7 +81,7 @@ class UserController extends AbstractController
             if (!$userPasswordHasher->isPasswordValid($user, $currentPassword)) {
 
 //
-                $flashy->error(' Mauvais mot de passe actuel, modification(s) non effectuée(s) ');
+                $flashy->error(' Mauvais mot de passe actuel, modification non effectuée ');
                 return $this->redirectToRoute('mdp_modifier',);
             }
 
@@ -96,7 +96,7 @@ class UserController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            $flashy->success(' Modification(s)  effectuée(s) ');
+            $flashy->success(' Modification du mot de passe effectuée ');
             return $this->redirectToRoute('user_details', ['id' => $user->getId()]);
         }
         return $this->render('mdp/modifier.html.twig', [

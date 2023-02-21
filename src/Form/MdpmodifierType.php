@@ -34,7 +34,7 @@ class MdpmodifierType extends AbstractType
                 'invalid_message' => 'Les mots de passe doivent correspondre',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => false,
-                'first_options'  => ['label' => 'Mot de passe : '],
+                'first_options'  => ['label' => 'Nouveau mot de passe : '],
                 'second_options' => ['label' => 'Confirmer le mot de passe : '],
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

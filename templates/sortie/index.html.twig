@@ -82,7 +82,7 @@
                 </thead>
                 <tbody>
                 {% for sortie in sorties %}
-                    {% if sortie.organisateur.nom == app.user.nom or sortie.etat.libelle!='créer' %}
+                    {% if sortie.organisateur.nom == app.user.nom or (sortie.etat.libelle!='créer' and sortie.etat.libelle!='archivée') %}
 
                         <tr>
                             <td>{{ sortie.nom }}</td>
@@ -105,7 +105,7 @@
 
                                 {% if app.user.nom ==  sortie.organisateur.nom and sortie.etat.libelle =='créer' %}
                                     <a href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
-                                    <a href="">Publier</a>
+                                    <a href="{{ path('sortie_publier', {'id': sortie.id}) }}">Publier</a>
                                 {% endif %}
 
                                 {% if sortie.etat.libelle == 'ouverte' and app.user.nom == sortie.organisateur.nom %}
