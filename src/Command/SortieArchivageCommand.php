@@ -43,10 +43,10 @@ class SortieArchivageCommand extends Command
             ->getQuery()
             ->getResult();
 
-        $etatArchivé = $this->entityManager->getRepository(Etats::class)->findOneBy(['libelle' => 'archivé']);
+        $etatArchive = $this->entityManager->getRepository(Etats::class)->findOneBy(['libelle' => 'archivée']);
 
         foreach ($sorties as $sortie) {
-            $sortie->setEtat($etatArchivé);
+            $sortie->setEtat($etatArchive);
             $this->entityManager->persist($sortie);
         }
 
