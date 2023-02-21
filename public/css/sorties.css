@@ -16,7 +16,7 @@
     color: white;
 }
 .pagination *:hover{
-    color: #00F1A1;
+    color: #6DB9FF;
 }
 
 .formulaire-recherche{
@@ -49,7 +49,7 @@
 #filtre_valide{
     width: 200px;
     height: 60px;
-    background-color:#00F1A1 ;
+    background-color:#6DB9FF ;
     justify-items: center;
     margin: auto;
 }
@@ -58,7 +58,8 @@
 
 }
 table{
-    border: 4px solid #00F1A1;
+    box-shadow: 0 0 10px #00F1A1;
+    background-color: #ffffff1f;
 
 }
 
@@ -69,13 +70,67 @@ table{
 }
 
 #bouton-creation-sortie{
-    color: #00F1A1;
-    border-color: #00F1A1;
+    color: #6DB9FF;
+    border-color: #6DB9FF;
     background-color:#2E2E2E ;
 }
 #bouton-creation-sortie:hover{
-    background-color: #00F1A1;
+    background-color: #6DB9FF;
     color: white;
+}
+
+/*css gestion détail sortie*/
+
+#affichage{
+    text-align: center;
+    color: #00F1A1;
+    margin-top: 30px;
+}
+.detail-sortie{
+    display: flex;
+    justify-content:space-around;
+    margin-top: 40px;
+
+}
+.button{
+    color: #6DB9FF;
+    background-color: #2E2E2E;
+    border-color:#6DB9FF ;
+}
+.button:hover{
+    background-color: #6DB9FF;
+    color:#2E2E2E ;
+}
+.description_sortie{
+    background-color:#ffffff1f ;
+    margin: auto;
+    margin-top: 30px;
+
+    box-shadow: 0 0 10px #00F1A1;
+    width: 30%;
+    height: 150px;
+}
+.participants{
+    background-color:#ffffff1f ;
+    margin: auto;
+    margin-top: 30px;
+
+    box-shadow: 0 0 10px #00F1A1;
+    width: 30%;
+    height: 150px;
+}
+
+article>p{
+    font-weight: bold;
+    font-size: 1.5em;
+}
+.button-detail-sortie{
+    display: flex;
+    justify-content: center;
+
+}
+.button-detail-sortie div{
+
 }
 
 

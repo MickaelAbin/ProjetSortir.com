@@ -1,45 +1,63 @@
 {% extends 'base.html.twig' %}
 
 {% block javascripts %}
-    <script src="{{ asset('Script/Detail_Sortie.js') }}" defer></script>
-    <script src="{{ asset('Script/compteRebours.js') }}"></script>
+
+
+{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/sorties.css') }}"
 {% endblock %}
 
 {% block title %}Sortie{% endblock %}
 
 {% block body %}
+<script src="{{ asset('Script/compteRebours.js') }}"></script>
+<script src="{{ asset('Script/Detail_Sortie.js') }}" defer></script>
 <main>
     <h1>{{ sortie.nom }}</h1>
-    <p id="affichage"></p>
+    <div id="affichage"></div>
     <input type="hidden" id="dateDebut" value=" {{ sortie.datecloture |date('d M H:i:s Y') }}">
-
-    <p id="ville">Le {{ sortie.datedebut | date('d/m/y') }} à {{ sortie.datedebut | date('H:i') }} dans la ville de </p>
-    <p>Lieu : {{ sortie.lieu.nomLieu }}</p>
+    <section class="detail-sortie">
+        <article>
+    <p id="ville">Date de la sortie : Le {{ sortie.datedebut | date('d/m/y') }} à {{ sortie.datedebut | date('H:i') }} </p>
+    <p>Lieu de la sortie : {{ sortie.lieu.nomLieu }}</p>
     <p id="adresse">Adresse : </p>
     <p id="codePostal">Code postal : </p>
     <input type="hidden" id="longitude" value="{{ sortie.lieu.longitude }}">
     <input type="hidden" id="latitude" value="{{ sortie.lieu.latitude }}">
-    <p>
-        {% if sortie.etat.libelle == 'annulée' %}
-        Motif d'annulation :
-        {% else %}
-        Description :
-        {% endif %}
-        {{ sortie.descriptioninfos }}</p>
-    <p>Nombre de participants : {{ sortie.participants | length }}/{{ sortie.nbinscriptionsmax }} , Inscriptions jusqu'au {{ sortie.datecloture | date('d/m/y') }}</p>
+    </article>
+    <article>
+    <p>Ville organisatrice : {{ sortie.site.nomSite}}</p>
+    <p>Nombre de participants : {{ sortie.participants | length }}/{{ sortie.nbinscriptionsmax }}</p>
+    <p> Inscriptions jusqu'au {{ sortie.datecloture | date('d/m/y') }}</p>
+    </article>
+    </section>
 
-    <div>
+        {% if sortie.etat.libelle == 'annulée' %}
+       <h2>Motif d'annulation </h2>
+        {% else %}
+        <h2>Description</h2>
+        {% endif %}
+    <p class="description_sortie">
+        {{ sortie.descriptioninfos }}
+        </p>
+     <h2>Liste des participants</h2>
+    <div class="participants">
         {% for participant in sortie.participants %}
 
             <a href="{{ path('user_details', {'id': participant.id}) }}" title="vue participant">
-                <p>{{ participant.nom }}</p>
+                <p>-{{ participant.pseudo }}</p>
             </a>
         {% endfor %}
         <div id="map"></div>
     </div>
-
-    <a href="{{ path('sortie_index') }}">retour à la liste</a>
-
-    <a href="{{ path('sortie_update', {'id': sortie.id}) }}">Modifier</a>
+<div class="button-detail-sortie">
+<div>
+    <a href="{{ path('sortie_index') }}"><button class="button is-rounded">retour à la liste</button> </a>
+</div>
+<div>
+    <a href="{{ path('sortie_update', {'id': sortie.id}) }}"><button class="button is-rounded">Modifier</button> </a>
+   </div>
+  </div>
 </main>
 {% endblock %}

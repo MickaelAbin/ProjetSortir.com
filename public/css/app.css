@@ -1,6 +1,10 @@
+body{
+    background-color:#2E2E2E ;
+}
+
 main{
-    background-color: #2E2E2E;
     margin: auto;
+    width: 90%;
     height: 90vh;
 }
 header{
@@ -8,13 +12,13 @@ header{
 }
 h1{
     font-size: 3em;
-    color:#00F1A1 ;
+    color:#6DB9FF ;
     text-align: center;
     margin: auto;
     text-decoration: underline;
 }
 h2{
-    color: #00F1A1;
+    color: #6DB9FF;
     font-size: 1.2em;
     font-style: oblique;
     font-weight: bold;
@@ -22,7 +26,7 @@ h2{
 
 }
 p{
-    color: #00F1A1;
+    color: #6DB9FF;
 }
 
 
@@ -51,10 +55,10 @@ p{
     width: 150px;
     align-content: center;
     margin:auto;
-    color: #00F1A1;
+    color: #6DB9FF;
 }
 #button_connexion:hover{
-    background-color: #00F1A1;
+    background-color: #6DB9FF;
     color: white;
 }
 
@@ -89,22 +93,22 @@ footer{
     height: 10vh;
 }
 .input{
-    border-color: #00F1A1;
+    border-color: #6DB9FF;
 }
 .input:hover{
-    border-color: #00F1A1;
+    border-color: #6DB9FF;
 }
 
 .checkbox:hover{
-    color: #00F1A1;
+    color: #6DB9FF;
 }
 
 input{
-    border-color: #00F1A1;
+    border-color: #6DB9FF;
 }
 
 label{
-    color:#00F1A1;
+    color:#6DB9FF;
 }
 
 
