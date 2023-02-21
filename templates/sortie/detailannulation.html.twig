@@ -4,6 +4,10 @@
     <script src="{{ asset('Script/Detail_Sortie.js') }}" defer></script>
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/CarteCss.css') }}">
+{% endblock %}
+
 {% block body %}
 
     <h1>Annuler une sortie</h1>
@@ -22,7 +26,7 @@
     </div>
 </form>
 
-
+    <div id="map"></div>
 
     <div class="retour">
         <a href="{{ path('sortie_index') }}"><button class="button is-primary is-outlined"> Annuler</button></a>
