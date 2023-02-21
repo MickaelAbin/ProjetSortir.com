@@ -95,6 +95,7 @@ class SortieController extends AbstractController
     }
     #[Route('/publier/{id}', name: '_publier')]
     public function publier(
+        FlashyNotifier $flashy,
         Request $request,
         Sortie $sortie,
         SortieRepository $sortieRepository,
@@ -103,6 +104,7 @@ class SortieController extends AbstractController
     {
                 $sortie->setEtat($etatsRepository->findOneBy(['libelle'=>'ouverte']));
                 $sortieRepository->save($sortie, true);
+                $flashy->success(' Sortie publiée ');
                 return $this->redirectToRoute('sortie_index', []);
         }
 
@@ -146,12 +148,13 @@ class SortieController extends AbstractController
         ]);
     }
     #[Route('/annuler/{id}', name: '_annuler')]
-    public function annuler(Request $request, Sortie $sortie, SortieRepository $sortieRepository, EtatsRepository $etatsRepository): Response
+    public function annuler(FlashyNotifier $flashy,Request $request, Sortie $sortie, SortieRepository $sortieRepository, EtatsRepository $etatsRepository): Response
     {
 
         $etat=($etatsRepository->find('2'));
         $sortie->setEtat($etat);
         $sortieRepository->save($sortie, true);
+        $flashy->success(' Sortie annulée ');
         return $this->redirectToRoute('sortie_index', []);
     }
 
@@ -163,8 +166,6 @@ class SortieController extends AbstractController
         Request $request,
     ): Response
     {
-
-        dump($request->get("valide"));
         if ($request->get("valide") !== null) {
 
             $sortie=$sortieRepository->find($id);

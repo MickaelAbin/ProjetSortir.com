@@ -82,7 +82,7 @@
                 </thead>
                 <tbody>
                 {% for sortie in sorties %}
-                    {% if sortie.organisateur.nom == app.user.nom or sortie.etat.libelle!='créer' %}
+                    {% if sortie.organisateur.nom == app.user.nom or (sortie.etat.libelle!='créer' and sortie.etat.libelle!='archivée') %}
 
                         <tr>
                             <td>{{ sortie.nom }}</td>
