@@ -1,34 +1,33 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoieGF2YWRlbmlzIiwiYSI6ImNsZThlcjQyNTBlb3ozdm5iaGx3MHltdWsifQ.J9tBXCZUfsGJmYaKIC2sPg';
 
 let longitude = document.getElementById('longitude');
 let latitude = document.getElementById('latitude');
 
 let ville = document.getElementById('ville');
 let adresse = document.getElementById('adresse');
-
-
-
 let codePostal = document.getElementById('codePostal');
-fetch('https://api-adresse.data.gouv.fr/reverse/?lon='+longitude.value+'&lat='+latitude.value)
-.then((reponse) => reponse.json())
-.then((json) => {
+
+console.log(longitude);
+console.log(latitude);
+
+console.log(longitude.value);
+console.log(latitude.value);
+
+fetch('https://api-adresse.data.gouv.fr/reverse/?lon=' + longitude.value + '&lat=' + latitude.value)
+    .then((reponse) => reponse.json())
+    .then((json) => {
         console.log(json);
-        ville.innerText += json.features[0].properties.city;
-        adresse.innerText += json.features[0].properties.name;
-        codePostal.innerText += json.features[0].properties.postcode;
+        ville.innerText += ' ' + json.features[0].properties.city;
+        adresse.innerText += ' ' + json.features[0].properties.name;
+        codePostal.innerText += ' ' + json.features[0].properties.postcode;
 
     });
 
-
 let mapCenter = [
-    longitude.value,
-    latitude.value
+    parseFloat(longitude.value),
+    parseFloat(latitude.value)
 ];
 
-console.log(mapCenter);
-
-let start = mapCenter;
-let end = start;
+let start = [-1.5, 47];
 
 let map = new mapboxgl.Map({
     container: 'map',
@@ -36,12 +35,6 @@ let map = new mapboxgl.Map({
     center: mapCenter, // starting position
     zoom: 12
 });
-// set the bounds of the map
-const bounds = [
-    [mapCenter['0'] - 2, mapCenter['1'] - 1.5],
-    [mapCenter['0'] + 2, mapCenter['1'] + 1.5]
-];
-map.setMaxBounds(bounds);
 
 // create a function to make a directions request
 async function getRoute(end) {
@@ -50,7 +43,7 @@ async function getRoute(end) {
     // only the end or destination will change
     const query = await fetch(
         `https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
-        { method: 'GET' }
+        {method: 'GET'}
     );
     const json = await query.json();
     const data = json.routes[0];
@@ -119,6 +112,52 @@ map.on('load', () => {
             'circle-radius': 10,
             'circle-color': '#3887be'
         }
+    });
+
+    map.on('click', (event) => {
+        const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
+        const end = {
+            type: 'FeatureCollection',
+            features: [
+                {
+                    type: 'Feature',
+                    properties: {},
+                    geometry: {
+                        type: 'Point',
+                        coordinates: coords
+                    }
+                }
+            ]
+        };
+        if (map.getLayer('end')) {
+            map.getSource('end').setData(end);
+        } else {
+            map.addLayer({
+                id: 'end',
+                type: 'circle',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: [
+                            {
+                                type: 'Feature',
+                                properties: {},
+                                geometry: {
+                                    type: 'Point',
+                                    coordinates: coords
+                                }
+                            }
+                        ]
+                    }
+                },
+                paint: {
+                    'circle-radius': 10,
+                    'circle-color': '#f30'
+                }
+            });
+        }
+        getRoute(coords);
     });
 
 });

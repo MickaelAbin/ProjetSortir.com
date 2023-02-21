@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/CarteCss.css') }}">
+{% endblock %}
+
 {% block javascripts %}
 
 
@@ -38,18 +42,23 @@
         {% else %}
         <h2>Description</h2>
         {% endif %}
+
     <p class="description_sortie">
         {{ sortie.descriptioninfos }}
         </p>
      <h2>Liste des participants</h2>
     <div class="participants">
+
+
+    <div id="map"></div>
+
+
         {% for participant in sortie.participants %}
 
             <a href="{{ path('user_details', {'id': participant.id}) }}" title="vue participant">
                 <p>-{{ participant.pseudo }}</p>
             </a>
         {% endfor %}
-        <div id="map"></div>
     </div>
 <div class="button-detail-sortie">
 <div>

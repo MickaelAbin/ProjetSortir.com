@@ -1,15 +1,10 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoieGF2YWRlbmlzIiwiYSI6ImNsZThlcjQyNTBlb3ozdm5iaGx3MHltdWsifQ.J9tBXCZUfsGJmYaKIC2sPg';
 
 let mapCenter = [
     longitude.value !== '' ? longitude.value : -1.5,
-    latitude.value !== '' ? longitude.value : 47.3
+    latitude.value !== '' ? latitude.value : 47.3
 ];
 
 let point = mapCenter;
-
-inputRecherche.addEventListener('click', function (){
-
-});
 
 let map = new mapboxgl.Map({
     container: 'map',
@@ -17,13 +12,6 @@ let map = new mapboxgl.Map({
     center: mapCenter, // starting position
     zoom: 12
 });
-// set the bounds of the map
-const bounds = [
-    [point['0'] - 2, point['1'] - 1.5],
-    [point['0'] + 2, point['1'] + 1.5]
-];
-
-map.setMaxBounds(bounds);
 
 // create a function to make a directions request
 async function getRoute() {

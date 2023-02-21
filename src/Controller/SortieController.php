@@ -30,14 +30,16 @@ class SortieController extends AbstractController
         SortieRepository $sortieRepository,
         SiteRepository $siteRepository,
         Request $request,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        UserRepository $userRepository
     ): Response
     {
         $filtreForm = $this->createForm(FiltreType::class);
         $filtreForm->handleRequest($request);
 
         if ($filtreForm->isSubmitted()) {
-            $sortie = (new SortieService($sortieRepository))->findSortieWithFiltre($filtreForm, $this->getUser()->getUserIdentifier());
+            $user = $userRepository->find($this->getUser());
+            $sortie = $sortieRepository->findSortieWithFiltre($filtreForm->getData(), $user);
 
         }else {
             $sortie = $sortieRepository->findAll();
@@ -93,6 +95,7 @@ class SortieController extends AbstractController
     }
     #[Route('/publier/{id}', name: '_publier')]
     public function publier(
+        FlashyNotifier $flashy,
         Request $request,
         Sortie $sortie,
         SortieRepository $sortieRepository,
@@ -101,6 +104,7 @@ class SortieController extends AbstractController
     {
                 $sortie->setEtat($etatsRepository->findOneBy(['libelle'=>'ouverte']));
                 $sortieRepository->save($sortie, true);
+                $flashy->success(' Sortie publiée ');
                 return $this->redirectToRoute('sortie_index', []);
         }
 
@@ -144,12 +148,13 @@ class SortieController extends AbstractController
         ]);
     }
     #[Route('/annuler/{id}', name: '_annuler')]
-    public function annuler(Request $request, Sortie $sortie, SortieRepository $sortieRepository, EtatsRepository $etatsRepository): Response
+    public function annuler(FlashyNotifier $flashy,Request $request, Sortie $sortie, SortieRepository $sortieRepository, EtatsRepository $etatsRepository): Response
     {
 
         $etat=($etatsRepository->find('2'));
         $sortie->setEtat($etat);
         $sortieRepository->save($sortie, true);
+        $flashy->success(' Sortie annulée ');
         return $this->redirectToRoute('sortie_index', []);
     }
 
@@ -161,8 +166,6 @@ class SortieController extends AbstractController
         Request $request,
     ): Response
     {
-
-        dump($request->get("valide"));
         if ($request->get("valide") !== null) {
 
             $sortie=$sortieRepository->find($id);
