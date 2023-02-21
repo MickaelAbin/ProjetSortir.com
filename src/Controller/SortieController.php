@@ -30,14 +30,16 @@ class SortieController extends AbstractController
         SortieRepository $sortieRepository,
         SiteRepository $siteRepository,
         Request $request,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        UserRepository $userRepository
     ): Response
     {
         $filtreForm = $this->createForm(FiltreType::class);
         $filtreForm->handleRequest($request);
 
         if ($filtreForm->isSubmitted()) {
-            $sortie = (new SortieService($sortieRepository))->findSortieWithFiltre($filtreForm, $this->getUser()->getUserIdentifier());
+            $user = $userRepository->find($this->getUser());
+            $sortie = (new SortieService($sortieRepository))->findSortieWithFiltre($filtreForm, $user);
 
         }else {
             $sortie = $sortieRepository->findAll();

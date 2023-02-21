@@ -64,20 +64,12 @@ class SortieRepository extends ServiceEntityRepository
 
     public function findSortieWithFiltre(
         $filtres,
-        string $user
+        User $user
     ) {
-
-        $participants = $this->getEntityManager()->getRepository('App\Entity\User')
-            ->createQueryBuilder('u')
-            ->innerJoin(Sortie::class, 's')
-            ->andWhere('u.email = :mail')
-            ->setParameter('mail', $user)
-            ->Select('s.id');
 
         $query = $this->createQueryBuilder('sortie')
             ->addSelect('sortie')
             ->innerJoin(Lieu::class,'lieu', Join::WITH, 'sortie.lieu = lieu.id')
-            ->innerJoin(Ville::class,'ville', Join::WITH, 'lieu.ville = ville.id')
             ->innerJoin(Site::class, 'site', Join::WITH, 'sortie.site = site.id')
             ->innerJoin(Etats::class, 'etat', Join::WITH, 'sortie.etat = etat.id')
             ->innerJoin(User::class, 'user', Join::WITH, 'sortie.organisateur = user.id')
@@ -96,13 +88,16 @@ class SortieRepository extends ServiceEntityRepository
         }
         if ($filtres['organise']) {
             $query->orWhere('sortie.organisateur = :organisateur')
-                ->setParameter('organisateur', $user);
+                ->setParameter('organisateur', $user->getId());
         }
         if ($filtres['inscrit']) {
-//            $query->orWhere($query->expr()->in('sortie.id',$participants->getDQL()));
+            $query->orWhere(':user member of sortie.participants');
         }
         if ($filtres['nonInscrit']) {
-//            $query->orWhere($query->expr()->notIn('sortie.id',$participants->getDQL()));
+            $query->orWhere(':user not member of sortie.participants');
+        }
+        if ($filtres['inscrit'] || $filtres['nonInscrit']){
+            $query->setParameter('user', $user->getId());
         }
         if ($filtres['passe']) {
             $query->orWhere('sortie.datedebut <= :now')

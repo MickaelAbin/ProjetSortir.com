@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="../{{ asset('css/CarteCss.css') }}">
+{% endblock %}
+
 {% block javascripts %}
     <script src="{{ asset('Script/Detail_Sortie.js') }}" defer></script>
     <script src="{{ asset('Script/compteRebours.js') }}"></script>
@@ -28,6 +32,8 @@
         {{ sortie.descriptioninfos }}</p>
     <p>Nombre de participants : {{ sortie.participants | length }}/{{ sortie.nbinscriptionsmax }} , Inscriptions jusqu'au {{ sortie.datecloture | date('d/m/y') }}</p>
 
+    <div id="map"></div>
+
     <div>
         {% for participant in sortie.participants %}
 
@@ -35,7 +41,6 @@
                 <p>{{ participant.nom }}</p>
             </a>
         {% endfor %}
-        <div id="map"></div>
     </div>
 
     <a href="{{ path('sortie_index') }}">retour à la liste</a>

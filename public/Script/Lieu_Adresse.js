@@ -38,11 +38,26 @@ inputRecherche.addEventListener('click', function (){
     fetch('https://api-adresse.data.gouv.fr/search/?q='+inputAdresse.value+'&postcode='+inputCodePostal.value)
         .then((reponse) => reponse.json())
         .then((json) => {
-            let coord = json.features[0].geometry.coordinates;
+            let coords = json.features[0].geometry.coordinates;
 
-            longitude.value = coord[0];
-            latitude.value = coord[1];
+            longitude.value = coords[0];
+            latitude.value = coords[1];
 
-            console.log(coord);
+            point = {
+                type: 'FeatureCollection',
+                features: [
+                    {
+                        type: 'Feature',
+                        properties: {},
+                        geometry: {
+                            type: 'Point',
+                            coordinates: coords
+                        }
+                    }
+                ]
+            };
+
+            map.getSource('point').setData(point);
+
         });
 });
