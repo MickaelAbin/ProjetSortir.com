@@ -11,6 +11,9 @@
                 {{ form_start(registrationForm) }}
             </div>
             <div class="position-form">
+                {{ form_row(registrationForm.current_password) }}
+            </div>
+            <div class="position-form">
                 {{ form_row(registrationForm.pseudo) }}
             </div>
             <div class="position-form">
@@ -25,12 +28,8 @@
             <div class="position-form">
                 {{ form_row(registrationForm.email) }}
             </div>
-            <div class="position-form">
-                {{ form_row(registrationForm.current_password) }}
-            </div>
-            <div class="position-form">
-                {{ form_row(registrationForm.plainPassword) }}
-            </div>
+
+
             <div class="position-form">
                 {{ form_row(registrationForm.site) }}
             </div>
@@ -44,6 +43,11 @@
             <div class="retour-profil">
                 <a href="{{ path('sortie_index') }}">
                     <button class="button is-rounded"> Annuler</button>
+                </a>
+            </div>
+            <div class="retour-profil">
+                <a href="{{ path('mdp_modifier') }}">
+                    <button class="button is-rounded"> Modifier mot de passe </button>
                 </a>
             </div>
         </div>
