@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Etats;
+use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -46,6 +48,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Sorties', 'fas fa-tree', Sortie::class);
+        yield MenuItem::linkToCrud('Etats', 'fas fa-tags', Etats::class);
+        yield MenuItem::linkToCrud('Sites', 'fas fa-comment', Site::class);
 
     }
 }

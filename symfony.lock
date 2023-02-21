@@ -47,6 +47,7 @@
 
     "knplabs/knp-paginator-bundle": {
         "version": "v6.1.1"
+    },
 
     "mercuryseries/flashy-bundle": {
         "version": "v5.1.0"

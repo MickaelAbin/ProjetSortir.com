@@ -19,7 +19,7 @@ class SortieService
 
     public function findSortieWithFiltre(
         FormInterface $filtreForm,
-        string $user
+        User $user
     ) {
         $filtres = $filtreForm->getData();
         self::verifForm($filtres);
