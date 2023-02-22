@@ -34,25 +34,53 @@ class SortieArchivageCommand extends Command
         $repository = $this->entityManager->getRepository(Sortie::class);
         $sorties = $repository->createQueryBuilder('s')
             ->join('s.etat', 'e')
-            ->where('e.libelle = :etatOuvert')
-            ->andWhere('s.datedebut < :date')
-            ->setParameters([
-                'etatOuvert' => 'ouverte',
-                'date' => new \DateTime('-1 month')
-            ])
+//            ->where('e.libelle = :etatOuvert')
+//            ->andWhere('s.datedebut < :date')
+//            ->setParameters([
+//                'etatOuvert' => 'ouverte',
+//                'date' => new \DateTime('-1 month')
+//            ])
             ->getQuery()
             ->getResult();
 
         $etatArchive = $this->entityManager->getRepository(Etats::class)->findOneBy(['libelle' => 'archivée']);
+        $etatEncours = $this->entityManager->getRepository(Etats::class)->findOneBy(['libelle' => 'en cours']);
+        $etatCloture = $this->entityManager->getRepository(Etats::class)->findOneBy(['libelle' => 'cloturée']);
+        $etatPasse = $this->entityManager->getRepository(Etats::class)->findOneBy(['libelle' => 'passée']);
 
         foreach ($sorties as $sortie) {
-            $sortie->setEtat($etatArchive);
+            if (($sortie->getDatecloture() < new \DateTime('now')) ){
+                $sortie->setEtat($etatCloture);
+            }
+            dump($sortie->getDatecloture());
+            dump($sortie->getDatedebut());
+            dump((date_modify($sortie->getDatedebut(), "+".$sortie->getDuree()." hour")));
+
+            dump(new \DateTime('now'));
+            if ((($sortie->getDatedebut()) < (new \DateTime('now'))) && (date_modify($sortie->getDatedebut(), "+".$sortie->getDuree()." hour")) > (new \DateTime('now'))){
+                $sortie->setEtat($etatEncours);
+
+            }
+
+            if (( date_modify($sortie->getDatedebut(), "+".$sortie->getDuree()." hour")) < new \DateTime('now')){
+                $sortie->setEtat($etatPasse);
+
+            }
+
+            if ($sortie->getDatedebut() < new \DateTime('-1 month')){
+                $sortie->setEtat($etatArchive);
+            }
+
+
+
+
+
             $this->entityManager->persist($sortie);
         }
 
         $this->entityManager->flush();
 
-        $output->writeln('Sorties archivées.');
+        $output->writeln('Etats Sorties modifiées.');
 
         return Command::SUCCESS;
     }
