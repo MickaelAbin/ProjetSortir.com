@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'my-custom-font';
+    src: url('../fonts/Alien.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 
 .entete{
