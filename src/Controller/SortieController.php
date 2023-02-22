@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 #[Route('/sortie', name: 'sortie')]
 class SortieController extends AbstractController
@@ -36,13 +37,22 @@ class SortieController extends AbstractController
     {
         $filtreForm = $this->createForm(FiltreType::class);
         $filtreForm->handleRequest($request);
+        $user = $userRepository->find($this->getUser());
 
         if ($filtreForm->isSubmitted()) {
-            $user = $userRepository->find($this->getUser());
             $sortie = $sortieRepository->findSortieWithFiltre($filtreForm->getData(), $user);
-
         }else {
-            $sortie = $sortieRepository->findAll();
+            $filtreForm->setData([
+                'site' => $user->getSite(),
+                'recherche' => '',
+                'dateDepart' => new \DateTime(),
+                'dateFin' => null,
+                'organise' => false,
+                'inscrit' => false,
+                'nonInscrit' => false,
+                'passe' => false
+            ]);
+            $sortie = $sortieRepository->findSortieWithFiltre($filtreForm->getData(), $user);
         }
 
         $affichage=$paginator->paginate(
@@ -151,7 +161,7 @@ class SortieController extends AbstractController
     public function annuler(FlashyNotifier $flashy,Request $request, Sortie $sortie, SortieRepository $sortieRepository, EtatsRepository $etatsRepository): Response
     {
 
-        $etat=($etatsRepository->find('2'));
+        $etat=($etatsRepository->findOneBy(['libelle' => 'annulée']));
         $sortie->setEtat($etat);
         $sortieRepository->save($sortie, true);
         $flashy->success(' Sortie annulée ');
@@ -163,24 +173,30 @@ class SortieController extends AbstractController
         int $id,
         EtatsRepository $etatsRepository,
         SortieRepository $sortieRepository,
+        Sortie $sortie,
         Request $request,
+        FlashyNotifier $flashy
     ): Response
     {
-        if ($request->get("valide") !== null) {
+        if ($sortie->getDatedebut() <= new \DateTime()) {
+            $flashy->error('Vous ne pouvez pas annulé la sortie!');
+            return $this->redirectToRoute('sortie_index', []);
+        } else if ($request->get("valide") !== null){
 
-            $sortie=$sortieRepository->find($id);
-            $etat=($etatsRepository->findOneBy(['libelle' => 'annulée']));
+            $sortie = $sortieRepository->find($id);
+            $etat = ($etatsRepository->findOneBy(['libelle' => 'annulée']));
             $sortie->setEtat($etat);
             $sortie->setDescriptioninfos($request->get('motif'));
             $sortieRepository->save($sortie, true);
             return $this->redirectToRoute('sortie_index', []);
         }
 
-        return $this->render('sortie/detailannulation.html.twig', [
+            return $this->render('sortie/detailannulation.html.twig', [
 
-            'sortie' => $sortieRepository->findDetailSortie($id)[0],
-        ]);
-    }
+                'sortie' => $sortieRepository->findDetailSortie($id)[0],
+            ]);
+        }
+
 
 
     #[Route('/admin/delete/{id}', name: '_delete')]
@@ -206,7 +222,7 @@ class SortieController extends AbstractController
         $date = new \DateTime();
         $sortie = $sortieRepository->findOneBy(['id' => $id]);
         $user = $userRepository->find($this->getUser());
-        if ($sortie->getDatecloture() > $date && $sortie->getEtat()->getLibelle() == 'ouverte') {
+        if ($sortie->getDatecloture() > $date && $sortie->getEtat()->getLibelle() == 'ouverte' && $sortie->getNbinscriptionsmax()<$sortie->getParticipants()->count()) {
             $sortie->addParticipant($user);
             $em->persist($sortie);
             $em->flush();
@@ -216,29 +232,30 @@ class SortieController extends AbstractController
             $flashy->error('Vous ne pouvez pas vous inscrire à cette sortie');
                 return $this->redirectToRoute('sortie_index', []);
     }
-#[Route('/desister/{id}',name:'_desister')]
-    public function desister(
-        FlashyNotifier              $flashy,
-        EntityManagerInterface $em,
-        SortieRepository $sortieRepository,
-        UserRepository $userRepository,
-        int $id,
+    #[Route('/desister/{id}',name:'_desister')]
+        public function desister(
+            FlashyNotifier              $flashy,
+            EntityManagerInterface $em,
+            SortieRepository $sortieRepository,
+            UserRepository $userRepository,
+            int $id,
 
-    ):Response
-{
-    $date = new \DateTime();
-    $sortie = $sortieRepository->findOneBy(['id' => $id]);
-    $user = $userRepository->find($this->getUser());
-    if ($date < $sortie->getDatedebut()) {
-        $sortie->removeParticipant($user);
-        $em->persist($sortie);
-        $em->flush();
-        $flashy->success(' Désistement validé ');
+        ):Response
+    {
+        $date = new \DateTime();
+        $sortie = $sortieRepository->findOneBy(['id' => $id]);
+        $user = $userRepository->find($this->getUser());
+        if ($date < $sortie->getDatedebut()) {
+            $sortie->removeParticipant($user);
+            $em->persist($sortie);
+            $em->flush();
+            $flashy->success(' Désistement validé ');
+            return $this->redirectToRoute('sortie_index', []);
+        }
+        $flashy->error('Vous ne pouvez pas vous désinscrire de la sortie');
+
         return $this->redirectToRoute('sortie_index', []);
     }
-    $flashy->error('Vous ne pouvez pas vous désinscrire de la sortie');
 
-    return $this->redirectToRoute('sortie_index', []);
-}
 }
 
