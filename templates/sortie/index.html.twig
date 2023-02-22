@@ -117,7 +117,7 @@
 
                                     {% if sortie.participants.contains(app.user) %}
                                         <a href="{{ path('sortie_desister', {'id': sortie.id}) }}">Se désister</a>
-                                    {% else %}
+                                    {% elseif sortie.nbinscriptionsmax < sortie.participants.count %}
                                         <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
                                     {% endif %}
                                 {% endif %}

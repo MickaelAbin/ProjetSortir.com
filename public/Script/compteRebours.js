@@ -1,10 +1,15 @@
 function CompteRebours() {
+    let compteur =0;
     let date_actuelle = new Date();//date du jour
     // var annee = date_actuelle.getFullYear();
     let dateSortie = document.getElementById('dateDebut');
     dateSortie = new Date(dateSortie.value);
 
     let tps_restant = (dateSortie.getTime()-date_actuelle.getTime())/1000;
+
+    if(tps_restant<0){
+         compteur="Inscription clôturée!";
+    }else{
 
     //========= Conversions
 
@@ -18,10 +23,11 @@ function CompteRebours() {
     H_restantes = Math.floor(H_restantes % 24);
     d_restants = Math.floor(d_restants);
 
-    let compteur = "Il reste" + d_restants + "J/ " + H_restantes + "h:" + i_resstantes + "mn:" + s_restantes + "s avant la fin de l'inscription.";
+     compteur = "Il reste" + d_restants + "J/ " + H_restantes + "h:" + i_resstantes + "mn:" + s_restantes + "s avant la fin de l'inscription.";
 
+
+}
     document.getElementById("affichage").innerText = compteur;
-
 }
     document.addEventListener('DOMContentLoaded', function () {
         setInterval(CompteRebours, 1000);
