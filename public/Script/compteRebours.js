@@ -18,7 +18,7 @@ function CompteRebours() {
     H_restantes = Math.floor(H_restantes % 24);
     d_restants = Math.floor(d_restants);
 
-    let compteur = "Il reste" + d_restants + "J/ " + H_restantes + "H/ " + i_resstantes + "mn/" + s_restantes + "s avant la fin de l'inscription.";
+    let compteur = "Il reste" + d_restants + "J/ " + H_restantes + "h:" + i_resstantes + "mn:" + s_restantes + "s avant la fin de l'inscription.";
 
     document.getElementById("affichage").innerText = compteur;
 

@@ -11,9 +11,18 @@ article{
     flex-direction: row-reverse;
     justify-content: center;
     margin-top: 50px;
+    box-shadow: 0 0 10px #00F1A1;
+    background-color: #ffffff1f;
+}
+.fond-formulaire{
+    box-shadow: 0 0 10px #00F1A1;
+    background-color: #ffffff1f;
+    margin-top: 45px;
+    padding-top: 15px;
+
 }
 .detail,.photo_utilisateur{
-    color: #00F1A1;
+    color:#6DB9FF;
     font-size: 1.5em;
     padding: 40px;
 
@@ -22,7 +31,7 @@ article{
 .photo_utilisateur img{
     width: 200px;
     height: 200px;
-    border: 1rem solid #00F1A1;
+    border: 1rem solid #6DB9FF;
 }
 .retour{
     display: flex;
@@ -36,18 +45,18 @@ article{
 }
 
 .retour button{
-    width: 150px;
+    width: 200px;
     margin: 20px;
 }
 .button{
-    color: #00F1A1;
+    color: #6DB9FF;
     background-color:#2E2E2E;
-    border-color:#00F1A1 ;
+    border-color:#6DB9FF ;
 }
 
 .button:hover{
     color:#2E2E2E;
-    background-color:#00F1A1;
+    background-color:#6DB9FF;
     border-color:#2E2E2E ;
 }
 
@@ -60,7 +69,7 @@ article{
     margin-top: 25px;
 
 }.button-modifier-profil button{
-    width: 150px;
+    width: 200px;
     margin: 20px;
  }
  .form-modification-profil{
@@ -68,15 +77,16 @@ article{
      margin: auto;
      flex-direction: column;
      width: 60%;
+
  }
  .form-modification-profil div{
 
-     font-size: 1.5em;
+     font-size: 1.3em;
 
  }
  .form-modification-profil label{
      text-align: left;
-     color: #00F1A1;
+     color: #6DB9FF;
  }
 
  .form-modification-profil input, .form-modification-profil select{
@@ -98,16 +108,20 @@ article{
      flex-direction: column;
  }
 .form-modification-profil select{
-    border-color:#00F1A1 ;
+    border-color:#6DB9FF ;
 }
 
 .vich-file input{
-    color:#00F1A1 ;
+    color:#6DB9FF ;
     width: 200px;
 }
 #registration_form_imageFile_file{
     width: 100%;
 }
+
+
+
+
 
 
 

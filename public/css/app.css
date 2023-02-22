@@ -1,6 +1,10 @@
-main{
+body{
     background-color: #2E2E2E;
+}
+
+main{
     margin: auto;
+    width: 90%;
     height: 90vh;
 }
 header{
@@ -8,13 +12,13 @@ header{
 }
 h1{
     font-size: 3em;
-    color:#00F1A1 ;
+    color: #2b6ba4;
     text-align: center;
     margin: auto;
     text-decoration: underline;
 }
 h2{
-    color: #00F1A1;
+    color: #6DB9FF;
     font-size: 1.2em;
     font-style: oblique;
     font-weight: bold;
@@ -22,7 +26,7 @@ h2{
 
 }
 p{
-    color: #00F1A1;
+    color: #6DB9FF;
 }
 
 
@@ -36,6 +40,10 @@ p{
     transform: translate(-50%,-50%);
 }
 
+.form-connexion{
+    box-shadow: 0 0 10px #00F1A1;
+}
+
 .column{
     margin: auto;
     width: 400px;
@@ -44,6 +52,7 @@ p{
 .label{
     display: flex;
     justify-content: center;
+    color:#6DB9FF ;
 }
 
 #button_connexion{
@@ -51,10 +60,11 @@ p{
     width: 150px;
     align-content: center;
     margin:auto;
-    color: #00F1A1;
+    color: #6DB9FF;
+    background-color:#2E2E2E ;
 }
 #button_connexion:hover{
-    background-color: #00F1A1;
+    background-color: #6DB9FF;
     color: white;
 }
 
@@ -89,22 +99,25 @@ footer{
     height: 10vh;
 }
 .input{
-    border-color: #00F1A1;
+    border-color: #6DB9FF;
 }
 .input:hover{
-    border-color: #00F1A1;
+    border-color: #6DB9FF;
 }
 
 .checkbox:hover{
-    color: #00F1A1;
+    color: #6DB9FF;
 }
 
 input{
-    border-color: #00F1A1;
+    border-color: #6DB9FF;
 }
 
 label{
-    color:#00F1A1;
+    color:#6DB9FF;
+}
+.alert{
+    color: red;
 }
 
 
