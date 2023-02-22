@@ -169,7 +169,7 @@ class SortieController extends AbstractController
         if ($request->get("valide") !== null) {
 
             $sortie=$sortieRepository->find($id);
-            $etat=($etatsRepository->find('2'));
+            $etat=($etatsRepository->findOneBy(['libelle' => 'annulée']));
             $sortie->setEtat($etat);
             $sortie->setDescriptioninfos($request->get('motif'));
             $sortieRepository->save($sortie, true);

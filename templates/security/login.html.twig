@@ -5,11 +5,11 @@
 {% block body %}
 <main>
     <div class="columns is-desktop" id="connexion">
-        <form method="post">
+        <form class="form-connexion" method="post">
 
 
             {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                <div class="alert alert-danger">Identifiant/mot de passe invalide</div>
             {% endif %}
 
             {% if app.user %}
@@ -18,13 +18,13 @@
                 </div>
             {% endif %}
             <div class="column">
-                <label class="label" for="inputEmail">Email</label>
+                <label class="label" for="inputEmail">Email/Pseudo</label>
                 <input class="input" type="text" placeholder="email/pseudo"
                 value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
                        autocomplete="email" required autofocus>
             </div>
             <div class="column">
-                <label class="label" for="inputPassword">Password</label>
+                <label class="label" for="inputPassword">Mot de passe</label>
                 <input class="input" type="password" name="password" id="inputPassword" class="form-control"
                        autocomplete="current-password" required placeholder="Password">
             </div>
@@ -46,8 +46,8 @@
                 </div>
             </div>
             <div class="column">
-                <button class="button is-primary is-outlined" type="submit" id="button_connexion">
-                    Sign in
+                <button class="button is-rounded" type="submit" id="button_connexion">
+                    Se connecter
                 </button>
             </div>
 

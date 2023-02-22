@@ -4,7 +4,6 @@ body {
 }
 
 #map {
-    align-self: center;
     width: 600px;
     height: 600px;
 }

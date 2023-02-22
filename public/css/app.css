@@ -1,5 +1,5 @@
 body{
-    background-color:#2E2E2E ;
+    background-color: #2E2E2E;
 }
 
 main{
@@ -12,7 +12,7 @@ header{
 }
 h1{
     font-size: 3em;
-    color:#6DB9FF ;
+    color: #2b6ba4;
     text-align: center;
     margin: auto;
     text-decoration: underline;
@@ -40,6 +40,10 @@ p{
     transform: translate(-50%,-50%);
 }
 
+.form-connexion{
+    box-shadow: 0 0 10px #00F1A1;
+}
+
 .column{
     margin: auto;
     width: 400px;
@@ -48,6 +52,7 @@ p{
 .label{
     display: flex;
     justify-content: center;
+    color:#6DB9FF ;
 }
 
 #button_connexion{
@@ -56,6 +61,7 @@ p{
     align-content: center;
     margin:auto;
     color: #6DB9FF;
+    background-color:#2E2E2E ;
 }
 #button_connexion:hover{
     background-color: #6DB9FF;
@@ -109,6 +115,9 @@ input{
 
 label{
     color:#6DB9FF;
+}
+.alert{
+    color: red;
 }
 
 
