@@ -2,46 +2,52 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="../{{ asset('css/CarteCss.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sorties.css') }}">
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('Script/Lieu_Adresse.js') }}" defer></script>
-    <script src="{{ asset('Script/Creation_Lieu.js') }}" defer ></script>
+    <script src="{{ asset('Script/Creation_Lieu.js') }}" defer></script>
 {% endblock %}
 
 {% block title %}Ajouter un lieu{% endblock %}
 
 {% block body %}
-<h2>Ajouter votre Lieu !</h2>
+    <main>
+        <h2>Ajouter votre Lieu !</h2>
 
-{#    {{ form_start(lieuForm) }}#}
-{#    {{ form_widget(lieuForm) }}#}
-{#    <a href="{{ path('ville_create') }}"><img src="../{{ asset('Images/Plus.png') }}" alt="un plus pour ajouter un lieu"></a>#}
-{#    {{ form_end(lieuForm) }}#}
-    <section>
-        <article>
+        {#    {{ form_start(lieuForm) }} #}
+        {#    {{ form_widget(lieuForm) }} #}
+        {#    <a href="{{ path('ville_create') }}"><img src="../{{ asset('Images/Plus.png') }}" alt="un plus pour ajouter un lieu"></a> #}
+        {#    {{ form_end(lieuForm) }} #}
+        <section class="creation-lieu">
+            <article class="ajout-lieu">
 
-            <div class="adresse">
-                <label for="adresse">Adresse : </label>
-                <input type="search" list="listeAdresse" id="adresse" name="adresse" value="">
+                <div class="adresse">
 
-                <label for="codePostal">Code postal : </label>
-                <input type="search" list="listeCodes" id="codePostal" name="codePostal" value="">
+                    <label for="adresse">Adresse : </label>
+                    <input type="search" list="listeAdresse" id="adresse" name="adresse" value="">
 
-                <input type="submit" id="recherche" value="Rechercher">
 
-                <datalist id="listeAdresse"></datalist>
-                <datalist id="listeCodes"></datalist>
-            </div>
+                    <label for="codePostal">Code postal : </label>
+                    <input type="search" list="listeCodes" id="codePostal" name="codePostal" value="">
 
-            {{ form_start(lieuForm) }}
+
+                    <input type="submit" id="recherche" value="Rechercher">
+
+                    <datalist id="listeAdresse"></datalist>
+                    <datalist id="listeCodes"></datalist>
+
+
+                {{ form_start(lieuForm) }}
                 {{ form_widget(lieuForm) }}
                 <button>Ajouter</button>
-            {{ form_end(lieuForm) }}
-
-        </article>
-
-        <div id="map"></div>
-    </section>
-
+                {{ form_end(lieuForm) }}
+                </div>
+            </article>
+            <article class="carte-creation">
+                <div id="map"></div>
+            </article>
+        </section>
+    </main>
 {% endblock %}
