@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
-        
+
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css">
-    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js" ></script>
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
     <script src="{{ asset('Script/API_MapBox_Token.js') }}"></script>
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
@@ -24,18 +24,20 @@
     {% block javascripts %}
 
 
-{#        {{ encore_entry_script_tags('app') }}#}
+        {#        {{ encore_entry_script_tags('app') }} #}
 
     {% endblock %}
 </head>
 
 <body>
 <header>
+
+
     <nav class="navbar" id="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-{#            <a class="navbar-item" href="">#}
-{#                <img src="{{ asset ("/Images/logo.png") }}" width="60" height="60">#}
-{#            </a>#}
+                        <a class="navbar" >
+                            <img src="{{ asset ("Images/logo5.png") }}" width="300" height="300">
+                        </a>
 
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
                data-target="navbarBasicExample">
@@ -47,63 +49,40 @@
 
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="{{ path('sortie_index') }}">
+                <a class="navbar-item" id="accueil" href="{{ path('sortie_index') }}">
                     Accueil
                 </a>
 
                 {% if app.user %}
-                <a class="navbar-item" href="{{ path('user_details', {'id': app.user.id}) }}">
-                    Mon profil
-                </a>
+                    <a class="navbar-item" id="mon-profil" href="{{ path('user_details', {'id': app.user.id}) }}">
+                        Mon profil
+                    </a>
                 {% endif %}
 
 
-                <a class="navbar-item" href="{{ path('app_logout') }}">
-                Se deconnecter
+                <a class="navbar-item" id="se-deconecter" href="{{ path('app_logout') }}">
+                    Se deconnecter
                 </a>
 
-                <a class="navbar-item" href="{{ path('app_register') }}">
+                <a class="navbar-item" id="creation-membre" href="{{ path('app_register') }}">
                     Creation d'un membre
                 </a>
 
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        More
-                    </a>
-
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item">
-                            About
-                        </a>
-                        <a class="navbar-item">
-                            Jobs
-                        </a>
-                        <a class="navbar-item">
-                            Contact
-                        </a>
-                        <hr class="navbar-divider">
-                        <a class="navbar-item">
-                            Report an issue
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </nav>
 </header>
-
 <div class="logo-site">
-    <div class="gauche"></div>
-    <img src="{{ asset('Images/logo.png') }}" alt="logo-site" width="250px" height="250px">
-    <div class="droite"></div>
+            <img src="{{ asset('Images/logo4.jpg') }}" alt="logo-site" width="200px" height="200px">
 </div>
-{#{% for label, messages in app.flashes %}#}
-{#    {% for message in messages %}#}
-{#        <div class="alert-{{ label }}">#}
-{#            {{ message }}#}
-{#        </div>#}
-{#    {% endfor %}#}
-{#{% endfor %}#}
+
+{# {% for label, messages in app.flashes %} #}
+{#    {% for message in messages %} #}
+{#        <div class="alert-{{ label }}"> #}
+{#            {{ message }} #}
+{#        </div> #}
+{#    {% endfor %} #}
+{# {% endfor %} #}
 {% block body %}{% endblock %}
 {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 <footer></footer>
