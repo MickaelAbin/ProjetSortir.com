@@ -132,6 +132,21 @@ article>p{
 .button-detail-sortie div{
 
 }
+#map{
+    width: 400px;
+    height: 400px;
+
+}
+.container{
+    display: flex;
+}
+.organisation-detail-sortie{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+
 
 
 
