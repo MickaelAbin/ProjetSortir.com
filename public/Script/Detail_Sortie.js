@@ -6,16 +6,11 @@ let ville = document.getElementById('ville');
 let adresse = document.getElementById('adresse');
 let codePostal = document.getElementById('codePostal');
 
-console.log(longitude);
-console.log(latitude);
-
-console.log(longitude.value);
-console.log(latitude.value);
+// let defaut = document.getElementById("defaut");
 
 fetch('https://api-adresse.data.gouv.fr/reverse/?lon=' + longitude.value + '&lat=' + latitude.value)
     .then((reponse) => reponse.json())
     .then((json) => {
-        console.log(json);
         ville.innerText += ' ' + json.features[0].properties.city;
         adresse.innerText += ' ' + json.features[0].properties.name;
         codePostal.innerText += ' ' + json.features[0].properties.postcode;
@@ -27,7 +22,8 @@ let mapCenter = [
     parseFloat(latitude.value)
 ];
 
-let start = [-1.5, 47];
+let end = mapCenter;
+let start = mapCenter;
 
 let map = new mapboxgl.Map({
     container: 'map',
@@ -36,8 +32,29 @@ let map = new mapboxgl.Map({
     zoom: 12
 });
 
+// defaut.addEventListener('click', function (){
+//
+//     getRoute(start);
+//
+//     start = {
+//         type: 'FeatureCollection',
+//         features: [
+//             {
+//                 type: 'Feature',
+//                 properties: {},
+//                 geometry: {
+//                     type: 'Point',
+//                     coordinates: start
+//                 }
+//             }
+//         ]
+//     };
+//
+//     map.getSource("start").setData(start);
+// });
+
 // create a function to make a directions request
-async function getRoute(end) {
+async function getRoute(start) {
     // make a directions request using cycling profile
     // an arbitrary start will always be the same
     // only the end or destination will change
@@ -74,7 +91,7 @@ async function getRoute(end) {
                 'line-cap': 'round'
             },
             paint: {
-                'line-color': '#3887be',
+                'line-color': '#33d754',
                 'line-width': 5,
                 'line-opacity': 0.75
             }
@@ -90,7 +107,7 @@ map.on('load', () => {
 
     // Add starting point to the map
     map.addLayer({
-        id: 'point',
+        id: 'start',
         type: 'circle',
         source: {
             type: 'geojson',
@@ -114,9 +131,36 @@ map.on('load', () => {
         }
     });
 
+    map.addLayer({
+        id: 'end',
+        type: 'circle',
+        source: {
+            type: 'geojson',
+            data: {
+                type: 'FeatureCollection',
+                features: [
+                    {
+                        type: 'Feature',
+                        properties: {},
+                        geometry: {
+                            type: 'Point',
+                            coordinates: end
+                        }
+                    }
+                ]
+            }
+        },
+        paint: {
+            'circle-radius': 10,
+            'circle-color': '#ef181f'
+        }
+    });
+
+    getRoute(end);
+
     map.on('click', (event) => {
         const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
-        const end = {
+        start = {
             type: 'FeatureCollection',
             features: [
                 {
@@ -129,34 +173,9 @@ map.on('load', () => {
                 }
             ]
         };
-        if (map.getLayer('end')) {
-            map.getSource('end').setData(end);
-        } else {
-            map.addLayer({
-                id: 'end',
-                type: 'circle',
-                source: {
-                    type: 'geojson',
-                    data: {
-                        type: 'FeatureCollection',
-                        features: [
-                            {
-                                type: 'Feature',
-                                properties: {},
-                                geometry: {
-                                    type: 'Point',
-                                    coordinates: coords
-                                }
-                            }
-                        ]
-                    }
-                },
-                paint: {
-                    'circle-radius': 10,
-                    'circle-color': '#f30'
-                }
-            });
-        }
+
+        map.getSource('start').setData(start);
+
         getRoute(coords);
     });
 
