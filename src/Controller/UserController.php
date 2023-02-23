@@ -59,6 +59,9 @@ class UserController extends AbstractController
         ]);
 
     }
+
+
+
     #[Route('/mdp', name: 'mdp_modifier')]
     public function modifiermdp(
         FlashyNotifier              $flashy,
@@ -76,6 +79,10 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && ($form->isValid()) ) {
+            if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/",$form->get('plainPassword')->getData())){
+                $flashy->error(' Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial ');
+                return $this->redirectToRoute('mdp_modifier',);
+            }
 //             Vérifiez si le mot de passe actuel est correct
             $currentPassword = $form->get('current_password')->getData();
             if (!$userPasswordHasher->isPasswordValid($user, $currentPassword)) {

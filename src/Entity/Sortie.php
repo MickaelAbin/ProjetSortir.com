@@ -39,7 +39,7 @@ class Sortie
     #[Assert\GreaterThan(value: 0)]
     #[ORM\Column]
     private ?int $nbinscriptionsmax = null;
-    #[Assert\Length(min: 0,max: 500)]
+    #[Assert\Length(max: 500, maxMessage: '500 caractères maximum')]
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $descriptioninfos = null;
 
