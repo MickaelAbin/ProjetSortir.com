@@ -11,11 +11,13 @@
 {% block body %}
 
     <h1>Annuler une sortie</h1>
+    <section class="annulation-sorite">
     <p>Nom de la sortie : {{ sortie.nom }}</p>
     <p id="ville">Le {{ sortie.datedebut | date('d/m/y') }} à {{ sortie.datedebut | date('H:i') }} dans la ville de </p>
     <p>Lieu : {{ sortie.lieu.nomLieu }}</p>
     <p id="adresse">Rue : </p>
     <p id="codePostal">Code postal : </p>
+    </section>
     <input type="hidden" id="longitude" value="{{ sortie.lieu.longitude }}">
     <input type="hidden" id="latitude" value="{{ sortie.lieu.latitude }}">
     <form action="{{ path('sortie_detailannulation',{'id': sortie.id}) }}"><label>Motif :

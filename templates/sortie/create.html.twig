@@ -4,27 +4,71 @@
 {% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/sorties.css') }}">
+
 {% endblock %}
 
 {% block title %}New Sortie{% endblock %}
 
 {% block body %}
     <main>
-    <h1>Créer une nouvelle sortie</h1>
+        <h1>Créer une nouvelle sortie</h1>
         <section class="creation-sortie">
-        <div>
-    {{ form_start(sortieForm) }}
+            <div class="fond-formulaire">
+                <div class="position-form">
+                    {{ form_start(sortieForm) }}
+                </div>
+                <div class="position-form">
+                    {{ form_row(sortieForm.nom) }}
+                </div>
+                <div class="position-form">
+                    {{ form_row(sortieForm.datedebut) }}
+                </div>
+                <div class="position-form">
+                    {{ form_row(sortieForm.duree) }}
+                </div>
+                <div class="position-form">
+                    {{ form_row(sortieForm.datecloture) }}
+                </div>
+                <div class="position-form">
+                    {{ form_row(sortieForm.nbinscriptionsmax) }}
+                </div>
+                <div class="position-form">
+                    {{ form_row(sortieForm.descriptioninfos) }}
+                </div>
+                <div class="position-form">
+                    {{ form_row(sortieForm.lieu) }}
+                </div>
+                <div class="position-form">
+                    <div>
+                        <label for="image">Ajoutez un lieu</label>
+                        <a href="{{ path('lieu_create') }}"><img src="../{{ asset('Images/Plusorange.png') }}" width="40"
+                                                                 height="40" alt="un plus pour ajouter un lieu"
+                                                                 id="image"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="gestion-des-boutons">
+            <div class="position-button">
+                {{ form_row(sortieForm.Enregistrer) }}
+            </div>
+            <div class="position-button">
+                {{ form_row(sortieForm.Publier) }}
+            </div>
+                <div class="position-button">
+                    <a href="{{ path('sortie_index') }}"><button class="button is-rounded">Retour à la liste</button></a>
+                </div>
+            </div>
+            <div class="position-form">
+                {{ form_end(sortieForm) }}
+            </div>
+        </section>
 
-    {{ form_widget(sortieForm) }}
-    <a href="{{ path('lieu_create') }}"><img src="../{{ asset('Images/Plus.png') }}" width="40" height="40" alt="un plus pour ajouter un lieu"></a>
 
-    {{ form_end(sortieForm) }}
-            <a href="{{ path('sortie_index') }}">Retour à la liste</a>
+
         </div>
-    <input type="hidden" id="longitude">
-    <input type="hidden" id="latitude">
+        <input type="hidden" id="longitude">
+        <input type="hidden" id="latitude">
 
-    <div id="map"></div>
         </section>
 
     </main>

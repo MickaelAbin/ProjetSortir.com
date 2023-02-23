@@ -18,9 +18,14 @@
 }
 .user-identifié{
     color: #F1580c;
+}
+.image-inscription{
 
-
-
+}
+#image-inscription{
+    display: flex;
+    justify-content: center;
+    margin: auto;
 
 }
 .pagination{
@@ -33,7 +38,7 @@
     color: white;
 }
 .pagination *:hover{
-    color: #6DB9FF;
+    color: #F1580c;
 }
 
 .formulaire-recherche{
@@ -51,18 +56,18 @@
 }
 .separation-form{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 
 
 }
 .separation-form input,.separation-form select{
     width: 100px;
 }
-.separation-form label{
-    margin: auto;
-    text-align: left;
-    justify-items: flex-start;
-}
+/*.separation-form label{*/
+/*    margin: auto;*/
+/*    text-align: left;*/
+/*    justify-items: flex-start;*/
+/*}*/
 .block-2{
     width: 35%;
 }
@@ -122,15 +127,16 @@
 
 #affichage{
     text-align: center;
-    color: #00F1A1;
+    color: #F1580c;
     margin-top: 30px;
 }
 .detail-sortie{
     display: flex;
     justify-content:space-around;
     margin-top: 40px;
-
 }
+
+
 .button{
     color: #F1580c;
     background-color: #000000;
@@ -140,61 +146,152 @@
     background-color: #F1580c;
     color:whitesmoke ;
 }
-.description_sortie{
-    background-color:#ffffff1f ;
-    margin: auto;
-    margin-top: 30px;
-
-    box-shadow: 0 0 25px #f1580c8c;
-    width: 30%;
-    height: 150px;
-}
-.participants{
-    background-color:#ffffff1f ;
-    margin: auto;
-    margin-top: 30px;
-
-    box-shadow: 0 0 25px #f1580c8c;
-    width: 30%;
-    height: 150px;
-}
-
-article>p{
-    font-weight: bold;
-    font-size: 1.5em;
-}
-.button-detail-sortie{
-    display: flex;
-    justify-content: center;
-
-}
-.button-detail-sortie div{
-
-}
-#map{
-    width: 450px;
-    height: 450px;
-
-}
 .container{
+    margin-top: 10px;
     display: flex;
+    justify-content: space-between;
 }
-.organisation-detail-sortie{
+.affichage-motif-participants{
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 50%;
+}
+.affichage-motif-participants article{
+    height: 50%;
+    box-shadow: 0 0 25px #f1580c8c;
+    border-radius: 15px;
+    margin: 20px;
+}
+.description_sortie{
+    margin: 10px;
+
+}
+.button-detail-sortie a, .button-detail-sortie button{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+.nom-participant{
+    display: flex;
+    flex-flow: column wrap;
+    padding-left: 10px;
+}
+
+#map{
+    margin-top: 20px;
+    width: 450px;
+    height: 450px;
+    border: 2px solid #F1580c;
+    border-radius: 15px;
+
+}
+
+.organisation-detail-sortie{
+
 }
 /*Création sortie*/
 
 .creation-sortie{
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    width: 60%;
+}
+.position-form div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
 
+}
+.position-form div *{
+    width: 100%;
+    margin: 10px;
+}
+.position-form label{
+width: 50%;
+}
+.position-form input, .position-form textarea, .position-form select, .position-form img,.position-form a{
+    width: 200px;
+}
+#image{
+    max-width: 50px;
+    max-height: 50px;
+
+}
+.gestion-des-boutons{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+.position-button{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.button{
+    color: #F1580c;
+    display: flex;
+    width: 150px;
+    margin: auto;
+    margin-top: 10px;
+}
+.fond-formulaire{
+    box-shadow: 0 0 25px #f1580c8c;
+    border-radius: 15px;
+    background-color: #000000;
+    margin-top: 45px;
+    padding-top: 15px;
+}
+
+
+
+/*Création d'un lieu*/
+
+
+.creation-lieu{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
 }
 
 .adresse{
     display: flex;
-    flex-direction: column;
+}
+.adresse label{
+    padding-left: 10px;
+}
+.adresse input{
 
 }
+.validation-lieu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: 20px;
+    background-color: #000000;
+    width: 60%;
+    box-shadow: 0 0 25px #f1580c8c;
+    border-radius: 15px;
+}
+.formulaire-ajout-lieu{
+    margin-top: 20px;
+
+}
+.formulaire-ajout-lieu button{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 150px;
+}
+
+
+
 
 
 
