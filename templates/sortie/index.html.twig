@@ -58,8 +58,8 @@
                 </div>
             </div>
             <div class="block-3">
-            {{ form_label(filtreForm.valide) }}
-            {{ form_widget(filtreForm.valide) }}
+                {{ form_label(filtreForm.valide) }}
+                {{ form_widget(filtreForm.valide) }}
             </div>
             {{ form_end(filtreForm) }}
         </section>
@@ -114,7 +114,7 @@
 
                                 {% endif %}
 
-                                {% if app.user.nom != sortie.organisateur.nom and sortie.etat.libelle == 'ouverte'  %}
+                                {% if app.user.nom != sortie.organisateur.nom and sortie.etat.libelle == 'ouverte' %}
 
                                     {% if sortie.participants.contains(app.user) %}
                                         <a href="{{ path('sortie_desister', {'id': sortie.id}) }}">Se désister</a>
@@ -135,12 +135,17 @@
                 </tbody>
             </table>
         </section>
-        <div >
+        <div>
             <div class="button-creation-sortie">
-        <a href="{{ path('sortie_create') }}">
-            <button class="button  is-rounded" id="bouton-creation-sortie">Créer une sortie</button>
-        </a>
-        </div>
+                <a href="{{ path('sortie_create') }}">
+                    <button class="button  is-rounded" id="bouton-creation-sortie">Créer une sortie</button>
+                </a>
+            </div>
+            <div class="button-creation-sortie">
+                <a href="{{ path('sortie_carte') }}">
+                    <button class="button  is-rounded" id="bouton-creation-sortie">Afficher carte des sorties</button>
+                </a>
+            </div>
         </div>
     </main>
 
