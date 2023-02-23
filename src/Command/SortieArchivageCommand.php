@@ -49,14 +49,13 @@ class SortieArchivageCommand extends Command
         $etatPasse = $this->entityManager->getRepository(Etats::class)->findOneBy(['libelle' => 'passée']);
 
         foreach ($sorties as $sortie) {
+
             if (($sortie->getDatecloture() < new \DateTime('now')) ){
                 $sortie->setEtat($etatCloture);
             }
-            dump($sortie->getDatecloture());
-            dump($sortie->getDatedebut());
-            dump((date_modify($sortie->getDatedebut(), "+".$sortie->getDuree()." hour")));
 
-            dump(new \DateTime('now'));
+
+
             if ((($sortie->getDatedebut()) < (new \DateTime('now'))) && (date_modify($sortie->getDatedebut(), "+".$sortie->getDuree()." hour")) > (new \DateTime('now'))){
                 $sortie->setEtat($etatEncours);
 
