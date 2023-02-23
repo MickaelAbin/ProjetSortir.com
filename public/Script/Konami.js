@@ -4,7 +4,7 @@ let konamiCodePosition = 0;
 $(document).keydown(function(e) {
     if (e.keyCode === konamiCode[konamiCodePosition++]) {
         if (konamiCodePosition === konamiCode.length) {
-            $('body').css('font-family', 'my-custom-font');
+            $('body').css('font-family', 'S6');
             konamiCodePosition = 0;
         }
     } else {
