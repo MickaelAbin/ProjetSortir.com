@@ -11,15 +11,19 @@ use App\Repository\EtatsRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
-use App\Service\SortieService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints\Date;
 
 #[Route('/sortie', name: 'sortie')]
@@ -248,6 +252,32 @@ class SortieController extends AbstractController
         $flashy->error('Vous ne pouvez pas vous désinscrire de la sortie');
 
         return $this->redirectToRoute('sortie_index', []);
+    }
+
+    #[Route('/donnees', name: '_donnees')]
+    public function donnees(
+        SortieRepository $sortieRepository,
+    ){
+        $sorties = $sortieRepository->findAll();
+
+        $lieus = array();
+
+        foreach ($sorties as $sortie){
+            $coords = [$sortie->getLieu()->getLongitude(),$sortie->getLieu()->getLatitude()];
+            $lieu = ['nom' => $sortie->getLieu()->getNomLieu(), 'coord' => $coords];
+            $lieus[] = $lieu;
+        }
+
+        return new JsonResponse($lieus);
+    }
+
+    #[Route('/carte', name: '_carte')]
+    public function carte(
+        SortieRepository $sortieRepository,
+        UserRepository $userRepository
+    ){
+
+        return $this->render('sortie/carte.html.twig');
     }
 
 }
