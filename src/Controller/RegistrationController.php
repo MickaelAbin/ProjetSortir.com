@@ -21,6 +21,7 @@ class RegistrationController extends AbstractController
 
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        $user->setPhoto('citrouillepardefaut.jpg');
 
         if ($form->isSubmitted() && $form->isValid() ) {
 
