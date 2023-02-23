@@ -35,6 +35,7 @@
                 <p>Ville organisatrice : {{ sortie.site.nomSite }}</p>
                 <p>Nombre de participants : {{ sortie.participants | length }}/{{ sortie.nbinscriptionsmax }}</p>
                 <p> Inscriptions jusqu'au {{ sortie.datecloture | date('d/m/y') }}</p>
+                <p><a href="{{ path('meteo_detail', {'id': sortie.id}) }}">Météo de la sortie</a></p>
             </article>
         </section>
 
@@ -64,7 +65,7 @@
                                 <p>-{{ participant.pseudo }}</p>
                             </a>
                         {% endfor %}
-                     <a href="{{ path('meteo_detail', {'id': sortie.id}) }}">Météo de la sortie</a>
+
                     </div>
                 </article>
             </div>
@@ -73,9 +74,9 @@
             </article>
         </section>
         <div class="button-detail-sortie">
-                <a href="{{ path('sortie_index') }}">
-                    <button class="button is-rounded">retour à la liste</button>
-                </a>
+            <a href="{{ path('sortie_index') }}">
+                <button class="button is-rounded">retour à la liste</button>
+            </a>
         </div>
     </main>
 {% endblock %}

@@ -42,12 +42,9 @@ p{
     color: white;
 }
 
-
-
 #connexion{
     justify-content: center;
     margin-top: 30px;
-
 
 }
 
@@ -127,9 +124,7 @@ footer{
     background-color:#F1580c ;
     height: 10vh;
 }
-.input{
 
-}
 .input:hover{
     border-color: #F1580c;
 }
@@ -138,9 +133,7 @@ footer{
     color: #F1580c;
 }
 
-input{
 
-}
 
 label{
     color:white;

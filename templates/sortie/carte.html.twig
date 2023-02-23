@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/CarteCss.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sorties.css') }}">
 {% endblock %}
 
 {% block javascripts %}
@@ -9,8 +10,15 @@
 {% endblock %}
 
 {% block body %}
+    <main>
     <h1>Cartes des Sorties</h1>
+        <div class="affichage-detail-map">
     <div id="map"></div>
+        </div>
+        <div class="position-button">
+            <a href="{{ path('sortie_index') }}"><button class="button is-rounded">Retour à la liste</button></a>
+        </div>
+    </main>
 {% endblock %}
 
 {% block title %}
