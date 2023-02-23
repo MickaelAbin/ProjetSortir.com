@@ -44,8 +44,15 @@ class SortieType extends AbstractType
                 'choice_label' => 'nom_lieu',
                 'label' => 'Lieu : '
             ])
-            ->add('Enregistrer',SubmitType::class,['label'=>'Enregistrer'])
-            ->add('Publier',SubmitType::class,['label'=>'Publier'])
+            ->add('Enregistrer',SubmitType::class,['label'=>'Enregistrer',
+                'attr'=>[
+                    'class'=>'button is-rounded'
+                ]])
+
+            ->add('Publier',SubmitType::class,['label'=>'Publier',
+                'attr'=>[
+                    'class'=>'button is-rounded'
+                ]])
         ;
     }
 

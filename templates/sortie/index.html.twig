@@ -91,8 +91,8 @@
                             <td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
                             <td>{{ sortie.participants | length }}/{{ sortie.nbinscriptionsmax }}</td>
                             <td>{{ sortie.etat.libelle }}</td>
-                            <td>{% if sortie.participants.contains(app.user) %}<img
-                                    src="../{{ asset('Images/validationInscription.png') }}" alt="image validation"
+                            <td class="image-inscription">{% if sortie.participants.contains(app.user) %}<img id="image-inscription"
+                                    src="../{{ asset('Images/validationInscription.jpg') }}" alt="image validation"
                                     width="20px" height="20px">{% endif %}</td>
                             <td>
                                 <a href="{{ path('user_details',{'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }}</a>
@@ -118,7 +118,7 @@
 
                                     {% if sortie.participants.contains(app.user) %}
                                         <a href="{{ path('sortie_desister', {'id': sortie.id}) }}">Se désister</a>
-                                    {% elseif sortie.nbinscriptionsmax < sortie.participants.count %}
+                                    {% elseif sortie.nbinscriptionsmax > sortie.participants.count %}
                                         <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
                                     {% endif %}
                                 {% endif %}

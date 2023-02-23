@@ -222,7 +222,7 @@ class SortieController extends AbstractController
         $date = new \DateTime();
         $sortie = $sortieRepository->findOneBy(['id' => $id]);
         $user = $userRepository->find($this->getUser());
-        if ($sortie->getDatecloture() > $date && $sortie->getEtat()->getLibelle() == 'ouverte' && $sortie->getNbinscriptionsmax()<$sortie->getParticipants()->count()) {
+        if ($sortie->getDatecloture() > $date && $sortie->getEtat()->getLibelle() == 'ouverte' && $sortie->getNbinscriptionsmax()>$sortie->getParticipants()->count()) {
             $sortie->addParticipant($user);
             $em->persist($sortie);
             $em->flush();
