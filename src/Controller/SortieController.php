@@ -25,6 +25,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 #[Route('/sortie', name: 'sortie')]
 class SortieController extends AbstractController
@@ -176,24 +177,30 @@ class SortieController extends AbstractController
         int $id,
         EtatsRepository $etatsRepository,
         SortieRepository $sortieRepository,
+        Sortie $sortie,
         Request $request,
+        FlashyNotifier $flashy
     ): Response
     {
-        if ($request->get("valide") !== null) {
+        if ($sortie->getDatedebut() <= new \DateTime()) {
+            $flashy->error('Vous ne pouvez pas annulé la sortie!');
+            return $this->redirectToRoute('sortie_index', []);
+        } else if ($request->get("valide") !== null){
 
-            $sortie=$sortieRepository->find($id);
-            $etat=($etatsRepository->findOneBy(['libelle' => 'annulée']));
+            $sortie = $sortieRepository->find($id);
+            $etat = ($etatsRepository->findOneBy(['libelle' => 'annulée']));
             $sortie->setEtat($etat);
             $sortie->setDescriptioninfos($request->get('motif'));
             $sortieRepository->save($sortie, true);
             return $this->redirectToRoute('sortie_index', []);
         }
 
-        return $this->render('sortie/detailannulation.html.twig', [
+            return $this->render('sortie/detailannulation.html.twig', [
 
-            'sortie' => $sortieRepository->findDetailSortie($id)[0],
-        ]);
-    }
+                'sortie' => $sortieRepository->findDetailSortie($id)[0],
+            ]);
+        }
+
 
 
     #[Route('/admin/delete/{id}', name: '_delete')]
@@ -219,7 +226,7 @@ class SortieController extends AbstractController
         $date = new \DateTime();
         $sortie = $sortieRepository->findOneBy(['id' => $id]);
         $user = $userRepository->find($this->getUser());
-        if ($sortie->getDatecloture() > $date && $sortie->getEtat()->getLibelle() == 'ouverte') {
+        if ($sortie->getDatecloture() > $date && $sortie->getEtat()->getLibelle() == 'ouverte' && $sortie->getNbinscriptionsmax()<$sortie->getParticipants()->count()) {
             $sortie->addParticipant($user);
             $em->persist($sortie);
             $em->flush();

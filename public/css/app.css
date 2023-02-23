@@ -1,24 +1,37 @@
+@font-face {
+    font-family: 'edos';
+    font-weight: 600;
+    src:url("../font/edosz.ttf") format('truetype');
+}
+
+
 body{
-    background-color: #2E2E2E;
+    background-color: #0c0c0c;
+    font-family: 'edos', sans-serif;
+
 }
 
 main{
     margin: auto;
     width: 90%;
     height: 90vh;
+    background-color: #0c0c0c;
+
+
 }
 header{
-    color: #9AFBF9;
+    color: #0c0c0c;
 }
 h1{
+    font-family: 'edos',sans-serif;
     font-size: 3em;
-    color: #2b6ba4;
+    color: whitesmoke;
     text-align: center;
     margin: auto;
-    text-decoration: underline;
+
 }
 h2{
-    color: #6DB9FF;
+    color: #F1580c;
     font-size: 1.2em;
     font-style: oblique;
     font-weight: bold;
@@ -26,33 +39,39 @@ h2{
 
 }
 p{
-    color: #6DB9FF;
+    color: white;
 }
 
 
 
 #connexion{
     justify-content: center;
-    vertical-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    margin-top: 30px;
+
+
 }
 
 .form-connexion{
-    box-shadow: 0 0 10px #00F1A1;
+    margin-top: 40px;
+    box-shadow: 0 0 25px #f1580c8c;
+    background-color: #000000;
+    height: 450px;
+    border-radius: 15px 15px 15px 15px;
+
 }
 
 .column{
-    margin: auto;
-    width: 400px;
+    margin-top: 20px;
+    width: 500px;
     font-size: 1em;
+
+
 }
 .label{
     display: flex;
     justify-content: center;
-    color:#6DB9FF ;
+    color:white ;
+    margin-top: 10px;
 }
 
 #button_connexion{
@@ -60,64 +79,82 @@ p{
     width: 150px;
     align-content: center;
     margin:auto;
-    color: #6DB9FF;
-    background-color:#2E2E2E ;
+    color: white;
+    background-color:#000000 ;
+    border-color: #F1580c;
 }
 #button_connexion:hover{
-    background-color: #6DB9FF;
+    background-color: #F1580c;
     color: white;
 }
 
 
-.logo-site{
+.logo-site {
     display: flex;
+    background-color: #0c0c0c;
+
 }
-.gauche{
-    width: 35%;
-    height: 200px;
-    background-color:#6DB9FF ;
-}
-.droite{
-    width: 35%;
-    background-color: #81C3FF;
-    height: 200px;
-}
+
 .logo-site img{
     width: 30%;
+    max-width: 30%;
     height: 200px;
+    justify-content: center;
+    margin:auto;
 
+}
+#logo-nav{
+    width: 100%;
+    height: 100%;
+    background-color: #0c0c0c;
 }
 .navbar{
-    background-color: #2E2E2E;
+    background-color:#0c0c0c ;
+    height: 150px;
+    width: 90%;
 }
 .navbar-item{
-    color: #00F1A1;
+
+    color: white;
+}
+#mon-profil:hover,#se-deconecter:hover,#creation-membre:hover,#accueil:hover{
+    color:#F1580c ;
+    background-color: #0c0c0c;
 }
 
+
 footer{
-    background-color:#6DB9FF ;
+    background-color:#F1580c ;
     height: 10vh;
 }
 .input{
-    border-color: #6DB9FF;
+
 }
 .input:hover{
-    border-color: #6DB9FF;
+    border-color: #F1580c;
 }
 
 .checkbox:hover{
-    color: #6DB9FF;
+    color: #F1580c;
 }
 
 input{
-    border-color: #6DB9FF;
+
 }
 
 label{
-    color:#6DB9FF;
+    color:white;
 }
 .alert{
     color: red;
+}
+.mdp-oublier a{
+    color: white;
+    padding-left: 20px;
+
+}
+a:hover{
+    color: #F1580c;
 }
 
 

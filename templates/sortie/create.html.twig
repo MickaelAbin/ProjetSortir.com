@@ -2,23 +2,30 @@
 
 {% block javascripts %}
 {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/sorties.css') }}">
+{% endblock %}
 
 {% block title %}New Sortie{% endblock %}
 
 {% block body %}
+    <main>
     <h1>Créer une nouvelle sortie</h1>
-
+        <section class="creation-sortie">
+        <div>
     {{ form_start(sortieForm) }}
 
     {{ form_widget(sortieForm) }}
-    <a href="{{ path('lieu_create') }}"><img src="../{{ asset('Images/Plus.png') }}" alt="un plus pour ajouter un lieu"></a>
+    <a href="{{ path('lieu_create') }}"><img src="../{{ asset('Images/Plus.png') }}" width="40" height="40" alt="un plus pour ajouter un lieu"></a>
 
     {{ form_end(sortieForm) }}
-
+            <a href="{{ path('sortie_index') }}">Retour à la liste</a>
+        </div>
     <input type="hidden" id="longitude">
     <input type="hidden" id="latitude">
 
     <div id="map"></div>
+        </section>
 
-    <a href="{{ path('sortie_index') }}">Retour à la liste</a>
+    </main>
 {% endblock %}

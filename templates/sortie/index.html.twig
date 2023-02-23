@@ -12,7 +12,7 @@
 
         <section class="entete">
             <p>Date du jour : {{ 'now' | date('d/m/Y') }}</p>
-            <div class="identifiant"><p>Participant : {{ app.user.pseudo }}</p></div>
+            <div class="identifiant"><p>Participant :</p><a class="navbar-item" id="mon-profil" href="{{ path('user_details', {'id': app.user.id}) }}"> <p class="user-identifié">{{ app.user.pseudo }}</p></a></div>
         </section>
         <h2>Filtrer les sorties</h2>
 
@@ -21,19 +21,20 @@
 
             <div class="block-1">
                 {{ form_start(filtreForm) }}
-                <div>
+
+                <div class="separation-form">
                     {{ form_label(filtreForm.site) }}
                     {{ form_widget(filtreForm.site) }}
                 </div>
-                <div>
+                <div class="separation-form">
                     {{ form_label(filtreForm.recherche) }}
                     {{ form_widget(filtreForm.recherche) }}
                 </div>
-                <div>
+                <div class="separation-form">
                     {{ form_label(filtreForm.dateDepart) }}
                     {{ form_widget(filtreForm.dateDepart) }}
                 </div>
-                <div>
+                <div class="separation-form">
                     {{ form_label(filtreForm.dateFin) }}
                     {{ form_widget(filtreForm.dateFin) }}
                 </div>
@@ -117,7 +118,7 @@
 
                                     {% if sortie.participants.contains(app.user) %}
                                         <a href="{{ path('sortie_desister', {'id': sortie.id}) }}">Se désister</a>
-                                    {% else %}
+                                    {% elseif sortie.nbinscriptionsmax < sortie.participants.count %}
                                         <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
                                     {% endif %}
                                 {% endif %}

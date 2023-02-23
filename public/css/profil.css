@@ -1,9 +1,9 @@
 
 h1{
     text-align: center;
-    color: #00F1A1;
+    color: whitesmoke;
     font-size: 4em;
-    text-decoration: underline;
+
 }
 
 article{
@@ -11,18 +11,19 @@ article{
     flex-direction: row-reverse;
     justify-content: center;
     margin-top: 50px;
-    box-shadow: 0 0 10px #00F1A1;
-    background-color: #ffffff1f;
+    box-shadow: 0 0 25px #f1580c8c;
+    background-color: #000000;
 }
 .fond-formulaire{
-    box-shadow: 0 0 10px #00F1A1;
-    background-color: #ffffff1f;
+    box-shadow: 0 0 25px #f1580c8c;
+    border-radius: 15px;
+    background-color: #000000;
     margin-top: 45px;
     padding-top: 15px;
 
 }
 .detail,.photo_utilisateur{
-    color:#6DB9FF;
+    color:white;
     font-size: 1.5em;
     padding: 40px;
 
@@ -31,7 +32,7 @@ article{
 .photo_utilisateur img{
     width: 200px;
     height: 200px;
-    border: 1rem solid #6DB9FF;
+    border: 3px solid #F1580c;
 }
 .retour{
     display: flex;
@@ -49,15 +50,15 @@ article{
     margin: 20px;
 }
 .button{
-    color: #6DB9FF;
-    background-color:#2E2E2E;
-    border-color:#6DB9FF ;
+    color: #F1580c;
+    background-color:#000000;
+    border-color:#F1580c ;
 }
 
 .button:hover{
-    color:#2E2E2E;
-    background-color:#6DB9FF;
-    border-color:#2E2E2E ;
+    color:#000000;
+    background-color:#F1580c;
+    border-color:#000000 ;
 }
 
 
@@ -86,7 +87,7 @@ article{
  }
  .form-modification-profil label{
      text-align: left;
-     color: #6DB9FF;
+     color: whitesmoke;
  }
 
  .form-modification-profil input, .form-modification-profil select{
@@ -108,11 +109,11 @@ article{
      flex-direction: column;
  }
 .form-modification-profil select{
-    border-color:#6DB9FF ;
+
 }
 
 .vich-file input{
-    color:#6DB9FF ;
+    color:white ;
     width: 200px;
 }
 #registration_form_imageFile_file{

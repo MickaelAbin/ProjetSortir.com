@@ -1,9 +1,26 @@
+@font-face {
+    font-family: 'my-custom-font';
+    src: url('../fonts/Alien.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 
 .entete{
     text-align: right;
     margin-right: 10vh;
     padding-top: 20px;
+}
+.identifiant{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.user-identifié{
+    color: #F1580c;
+
+
+
 
 }
 .pagination{
@@ -24,9 +41,27 @@
     display: flex;
     margin: auto;
     margin-top: 20px;
+
 }
 .block-1{
-    width: 35%;
+    width: 45%;
+    display: flex;
+
+
+}
+.separation-form{
+    display: flex;
+    justify-content: flex-end;
+
+
+}
+.separation-form input,.separation-form select{
+    width: 100px;
+}
+.separation-form label{
+    margin: auto;
+    text-align: left;
+    justify-items: flex-start;
 }
 .block-2{
     width: 35%;
@@ -37,10 +72,6 @@
     justify-items: center;
 }
 
-.affichage-sorties {
-
-}
-
 .table{
     width: 90%;
     margin: auto;
@@ -49,17 +80,25 @@
 #filtre_valide{
     width: 200px;
     height: 60px;
-    background-color:#6DB9FF ;
+    background: linear-gradient(to right, #F1580c, #F5793B);
     justify-items: center;
     margin: auto;
 }
 #filtre_valide:hover{
     box-shadow: 10px 10px black;
+    padding-bottom: 3px;
+}
+
+.affichage-sorties{
+    margin-top: 50px;
 
 }
-table{
-    box-shadow: 0 0 10px #00F1A1;
-    background-color: #ffffff1f;
+.table{
+    margin: auto;
+    padding-top: 20px;
+    box-shadow: 0 0 25px #f1580c8c;
+    background-color: #000000;
+    color: white;
 
 }
 
@@ -70,13 +109,13 @@ table{
 }
 
 #bouton-creation-sortie{
-    color: #6DB9FF;
-    border-color: #6DB9FF;
-    background-color:#2E2E2E ;
+    color: #F1580c;
+    border-color: #F1580c;
+    background-color:#000000 ;
 }
 #bouton-creation-sortie:hover{
-    background-color: #6DB9FF;
-    color: white;
+    background-color: #F1580c;
+    color: #000000;
 }
 
 /*css gestion détail sortie*/
@@ -93,20 +132,20 @@ table{
 
 }
 .button{
-    color: #6DB9FF;
-    background-color: #2E2E2E;
-    border-color:#6DB9FF ;
+    color: #F1580c;
+    background-color: #000000;
+    border-color:#F1580c ;
 }
 .button:hover{
-    background-color: #6DB9FF;
-    color:#2E2E2E ;
+    background-color: #F1580c;
+    color:whitesmoke ;
 }
 .description_sortie{
     background-color:#ffffff1f ;
     margin: auto;
     margin-top: 30px;
 
-    box-shadow: 0 0 10px #00F1A1;
+    box-shadow: 0 0 25px #f1580c8c;
     width: 30%;
     height: 150px;
 }
@@ -115,7 +154,7 @@ table{
     margin: auto;
     margin-top: 30px;
 
-    box-shadow: 0 0 10px #00F1A1;
+    box-shadow: 0 0 25px #f1580c8c;
     width: 30%;
     height: 150px;
 }
@@ -133,8 +172,8 @@ article>p{
 
 }
 #map{
-    width: 400px;
-    height: 400px;
+    width: 450px;
+    height: 450px;
 
 }
 .container{
@@ -144,6 +183,17 @@ article>p{
     display: flex;
     flex-direction: column;
     width: 40%;
+}
+/*Création sortie*/
+
+.creation-sortie{
+
+}
+
+.adresse{
+    display: flex;
+    flex-direction: column;
+
 }
 
 
