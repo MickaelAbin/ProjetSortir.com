@@ -182,6 +182,7 @@
 }
 
 #map{
+    margin: auto;
     margin-top: 20px;
     width: 450px;
     height: 450px;
@@ -324,14 +325,18 @@ width: 50%;
 }
 .bouton-annulation{
     display: flex;
+    justify-content: center;
 }
 .carte-annulation{
 
     margin-left: 20px;
     margin-bottom: 20px;
     width: 50%;
-
 }
+
+/*Carte page détail des sorties sur la carte*/
+
+
 
 
 
