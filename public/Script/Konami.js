@@ -4,7 +4,8 @@ let konamiCodePosition = 0;
 $(document).keydown(function(e) {
     if (e.keyCode === konamiCode[konamiCodePosition++]) {
         if (konamiCodePosition === konamiCode.length) {
-            $('body').css('font-family', 'S6');
+            $('body').css('font-family', 'S7');
+            $('img').attr('src', '../images/citrouille.png');
             konamiCodePosition = 0;
         }
     } else {
