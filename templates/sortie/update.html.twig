@@ -1,14 +1,62 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Edit Sortie{% endblock %}
+{% block stylesheets %}
+    <script src="{{ asset('Script/Detail_Sortie.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/sorties.css') }}">
+
+{% endblock %}
 
 {% block body %}
+    <main>
     <h1>Modifier une sortie</h1>
 
+    <section class="creation-sortie">
+        <div class="fond-formulaire">
+            <div class="position-form">
+                {{ form_start(form) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(form.nom) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(form.datedebut) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(form.duree) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(form.datecloture) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(form.nbinscriptionsmax) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(form.descriptioninfos) }}
+            </div>
+            <div class="position-form">
+                {{ form_row(form.lieu) }}
+            </div>
+            <div class="gestion-des-boutons">
+                <div class="position-button">
+                    {{ form_row(form.Enregistrer) }}
+                </div>
+                <div class="position-button">
+                    {{ form_row(form.Publier) }}
+                </div>
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
-<button><a href="{{ path('sortie_index') }}">Retour</a></button>
+            </div>
+
+
+            <div class="position-form">
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </section>
+
+        <div class="position-button">
+    <a href="{{ path('sortie_index') }}"><button class="button is-rounded">Retour</button></a>
+        </div>
+    </main>
 
 {% endblock %}

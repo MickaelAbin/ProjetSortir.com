@@ -40,6 +40,10 @@
 .pagination *:hover{
     color: #F1580c;
 }
+.button-profil{
+    display: flex;
+    flex-direction: row;
+}
 
 .formulaire-recherche{
     width: 90%;
@@ -237,6 +241,12 @@ width: 50%;
     margin: auto;
     margin-top: 10px;
 }
+/*.button a{*/
+/*    color: #F1580c;*/
+/*}*/
+/*.button a:hover{*/
+/*    color: #000000;*/
+/*}*/
 .fond-formulaire{
     box-shadow: 0 0 25px #f1580c8c;
     border-radius: 15px;
@@ -289,6 +299,40 @@ width: 50%;
     margin-bottom: 10px;
     width: 150px;
 }
+
+/*Modification d'une sortie*/
+#sortie div*{
+    justify-content: center;
+}
+
+/*Annulation sortie*/
+
+.annulation-sortie{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+}
+.annulation-sortie{
+    box-shadow: 0 0 25px #f1580c8c;
+}
+.justification{
+
+
+    justify-content: center;
+    margin: auto;
+}
+.bouton-annulation{
+    display: flex;
+}
+.carte-annulation{
+
+    margin-left: 20px;
+    margin-bottom: 20px;
+    width: 50%;
+
+}
+
 
 
 

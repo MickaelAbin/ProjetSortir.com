@@ -54,16 +54,15 @@
             <div class="position-button">
                 {{ form_row(sortieForm.Publier) }}
             </div>
-                <div class="position-button">
-                    <a href="{{ path('sortie_index') }}"><button class="button is-rounded">Retour à la liste</button></a>
-                </div>
+
             </div>
             <div class="position-form">
                 {{ form_end(sortieForm) }}
             </div>
+            <div class="position-button">
+                <a href="{{ path('sortie_index') }}"><button class="button is-rounded">Retour à la liste</button></a>
+            </div>
         </section>
-
-
 
         </div>
         <input type="hidden" id="longitude">
