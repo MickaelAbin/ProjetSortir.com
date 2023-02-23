@@ -84,10 +84,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $imageFile;
 
 
+
+    #[ORM\Column(nullable: true)] private ?\DateTime $updatedAct;
+
+
+
     public function __construct()
     {
         $this->organisateur = new ArrayCollection();
         $this->participant = new ArrayCollection();
+
+
     }
 
     public function getId(): ?int
@@ -303,15 +310,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->imageFile;
     }
 
-    public function setImageFile(File $image = null)
+    public function setImageFile(File $photo = null)
     {
-        $this->imageFile = $image;
+        $this->imageFile = $photo;
 
-        if ($image) {
+        if ($photo) {
             // if 'updatedAt' is not defined in your entity, use another property
             $this->updatedAct = new \DateTime('now');
         }
-        return $this;
+
     }
 
     public function __serialize(): array
@@ -323,6 +330,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             'password' => $this->password,
         ];
     }
-
+    public function __unserialize(array $serialized){    $this->imageFile = base64_decode($serialized['imageFile']);    $this->email = $serialized['email'];    $this->id = $serialized['id'];    $this->password = $serialized['password'];    return $this;}
 
 }

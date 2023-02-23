@@ -40,6 +40,7 @@ class ModifProfilType extends AbstractType
                 'required' => false,
                 'download_uri' => false,
                 'allow_delete'  => false,
+
             ])
             ->add('current_password', PasswordType::class, [
 

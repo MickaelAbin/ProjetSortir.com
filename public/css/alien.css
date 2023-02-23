@@ -4,3 +4,34 @@
     src: url("../fonts/Alien.ttf") format("truetype");
     font-weight: normal;
 }
+@font-face {
+    font-family: S1;
+    src: url("../fonts/S1.ttf") format("truetype");
+    font-weight: normal;
+}
+@font-face {
+    font-family: S2;
+    src: url("../fonts/S2.ttf") format("truetype");
+    font-weight: normal;
+}
+@font-face {
+    font-family: S3;
+    src: url("../fonts/S3.ttf") format("truetype");
+    font-weight: normal;
+}
+@font-face {
+    font-family: S4;
+    src: url("../fonts/S4.ttf") format("truetype");
+    font-weight: normal;
+}
+@font-face {
+    font-family: S5;
+    src: url("../fonts/S5.ttf") format("truetype");
+    font-weight: normal;
+}
+@font-face {
+    font-family: S6;
+    src: url("../fonts/S6.ttf") format("truetype");
+    font-weight: normal;
+
+}
