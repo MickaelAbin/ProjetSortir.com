@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    <script src="{{ asset('Script/API_Meteo_Token.js') }}" defer></script>
+    <script src="{{ asset('Script/Detail_Meteo.js') }}" defer></script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/meteo.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <h1>Meteo de la sortie</h1>
+
+    <input type="hidden" id="longitude" value="{{ longitude }}">
+    <input type="hidden" id="latitude" value="{{ latitude }}">
+    <input type="hidden" id="dateSortie" value="{{ dateDebut | date('d M Y H:i:s') }}">
+
+    <section>
+    </section>
+
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

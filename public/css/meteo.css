@@ -1,0 +1,11 @@
+section{
+    display: flex;
+    flex-flow: column wrap;
+    justify-items: center;
+    width: 60%;
+    margin-left: 20%;
+}
+
+section article{
+    text-align: center;
+}

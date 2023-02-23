@@ -111,8 +111,7 @@ class UserController extends AbstractController
         ]);
 
     }
-    #[
-        Route('user/details/{id}', name: 'user_details')]
+    #[Route('user/details/{id}', name: 'user_details')]
     public function details(
         int            $id,
         UserRepository $userRepository
