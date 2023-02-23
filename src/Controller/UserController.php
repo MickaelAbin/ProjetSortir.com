@@ -36,7 +36,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && ($form->isValid()) ) {
-
 //             Vérifiez si le mot de passe actuel est correct
                 $currentPassword = $form->get('current_password')->getData();
                 if (!$userPasswordHasher->isPasswordValid($user, $currentPassword)) {
@@ -60,36 +59,7 @@ class UserController extends AbstractController
         ]);
 
     }
-    #[Route('/modiftotale', name: 'user_modiftotale')]
-    public function register(Request $request,UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
-    {
-        $user = $this->getUser();
-        $user = $userRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
 
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid() ) {
-
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('app_login');
-        }
-
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
-    }
 
 
     #[Route('/mdp', name: 'mdp_modifier')]
@@ -109,6 +79,10 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && ($form->isValid()) ) {
+            if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/",$form->get('plainPassword')->getData())){
+                $flashy->error(' Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial ');
+                return $this->redirectToRoute('mdp_modifier',);
+            }
 //             Vérifiez si le mot de passe actuel est correct
             $currentPassword = $form->get('current_password')->getData();
             if (!$userPasswordHasher->isPasswordValid($user, $currentPassword)) {
