@@ -7,7 +7,7 @@
 @font-face {
     font-family: S1;
     src: url("../fonts/S1.ttf") format("truetype");
-    font-weight: normal;
+    font-weight: auto;
 }
 @font-face {
     font-family: S2;
@@ -28,10 +28,30 @@
     font-family: S5;
     src: url("../fonts/S5.ttf") format("truetype");
     font-weight: normal;
+
 }
 @font-face {
     font-family: S6;
     src: url("../fonts/S6.ttf") format("truetype");
     font-weight: normal;
+
+}
+@font-face {
+    font-family: S7;
+    src: url("../fonts/S7.ttf") format("truetype");
+    font-weight: normal;
+
+}
+@font-face {
+    font-family: S8;
+    src: url("../fonts/S8.ttf") format("truetype");
+    font-weight: normal;
+
+}
+@font-face {
+    font-family: S9;
+    src: url("../fonts/S9.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
 
 }
