@@ -6,34 +6,48 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/CarteCss.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sorties.css') }}">
 {% endblock %}
 
 {% block body %}
-
+<main>
     <h1>Annuler une sortie</h1>
-    <section class="annulation-sorite">
-    <p>Nom de la sortie : {{ sortie.nom }}</p>
-    <p id="ville">Le {{ sortie.datedebut | date('d/m/y') }} à {{ sortie.datedebut | date('H:i') }} dans la ville de </p>
-    <p>Lieu : {{ sortie.lieu.nomLieu }}</p>
-    <p id="adresse">Rue : </p>
-    <p id="codePostal">Code postal : </p>
+    <section class="annulation-sortie">
+        <article class="justification">
+        <div id="form-annulation">
+            <p>Nom de la sortie : {{ sortie.nom }}</p>
+            <p id="ville">Le {{ sortie.datedebut | date('d/m/y') }} à {{ sortie.datedebut | date('H:i') }} dans la ville
+                de </p>
+            <p>Lieu : {{ sortie.lieu.nomLieu }}</p>
+            <p id="adresse">Rue : </p>
+            <p id="codePostal">Code postal : </p>
+        </div>
+        <input type="hidden" id="longitude" value="{{ sortie.lieu.longitude }}">
+        <input type="hidden" id="latitude" value="{{ sortie.lieu.latitude }}">
+        <div id="button-annuler-sortie">
+            <form action="{{ path('sortie_detailannulation',{'id': sortie.id}) }}"><label>Motif :
+                    <input type="text" name="motif">
+                </label>
+                <div class="bouton-annulation">
+                <div class="retour">
+                    <button type="submit" name="valide" class="button is-rounded"> Annuler</button>
+                </div>
+                <div class="retour">
+                    <a href="{{ path('sortie_index') }}">
+                        <button class="button is-rounded"> Retour</button>
+                    </a>
+                </div>
+        </div>
+            </form>
+        </div>
+        </article>
+        <article class="carte-annulation">
+        <div id="map"></div>
+
+        </article>
     </section>
-    <input type="hidden" id="longitude" value="{{ sortie.lieu.longitude }}">
-    <input type="hidden" id="latitude" value="{{ sortie.lieu.latitude }}">
-    <form action="{{ path('sortie_detailannulation',{'id': sortie.id}) }}"><label>Motif :
-        <input type="text" name="motif">
-    </label>
-    <div class="retour">
-       <button type="submit" name="valide" class="button is-primary is-outlined"> Annuler </button>
-    </div>
-</form>
 
-    <div id="map"></div>
-
-    <div class="retour">
-        <a href="{{ path('sortie_index') }}"><button class="button is-primary is-outlined"> Annuler</button></a>
-    </div>
-
+    </main>
 
 {% endblock %}
 
