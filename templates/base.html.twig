@@ -24,6 +24,7 @@
 {#    <script src="{{ asset('https://code.jquery.com/jquery-3.6.0.min.js') }}"></script>#}
     <script src="{{ asset('script/konami.js') }}"></script>
     <script src="{{ asset('/script/flashy.js') }}"></script>
+    <script src="{{ asset('/script/burger.js') }}"></script>
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
 
@@ -58,24 +59,18 @@
 
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
+                {% if app.user %}
                 <a class="navbar-item" id="accueil" href="{{ path('sortie_index') }}">
                     Accueil
                 </a>
 
-                {% if app.user %}
                     <a class="navbar-item" id="mon-profil" href="{{ path('user_details', {'id': app.user.id}) }}">
                         Mon profil
                     </a>
+                    <a class="navbar-item" id="se-deconecter" href="{{ path('app_logout') }}">
+                        Se deconnecter
+                    </a>
                 {% endif %}
-
-
-                <a class="navbar-item" id="se-deconecter" href="{{ path('app_logout') }}">
-                    Se deconnecter
-                </a>
-
-                <a class="navbar-item" id="creation-membre" href="{{ path('app_register') }}">
-                    Creation d'un membre
-                </a>
 
             </div>
         </div>

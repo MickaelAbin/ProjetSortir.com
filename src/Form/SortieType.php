@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,22 +24,28 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class,  [
-                'label' => 'Nom de la sortie'
+                'label' => 'Nom de la sortie : '
             ])
             ->add('datedebut', DateTimeType::class,[
                 'html5' => true,
                 'widget' => 'single_text',
                 'label' => 'Date et heure de la sortie : '
             ])
-            ->add('duree')
+            ->add('duree', NumberType::class,[
+                'label'=>'Durée : '
+            ])
 
             ->add('datecloture', DateType::class,[
                 'html5' => true,
                 'widget' => 'single_text',
                 'label' => "Date limite d'inscription : "
             ])
-            ->add('nbinscriptionsmax')
-            ->add('descriptioninfos',TextareaType::class)
+            ->add('nbinscriptionsmax', NumberType::class,[
+                'label'=>'Nombre de participants : '
+            ])
+            ->add('descriptioninfos',TextareaType::class,[
+                'label'=>'Description : '
+            ])
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'nom_lieu',

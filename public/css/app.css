@@ -42,6 +42,7 @@ p{
     color: white;
 }
 
+
 #connexion{
     justify-content: center;
     margin-top: 30px;
@@ -119,6 +120,13 @@ p{
     background-color: #0c0c0c;
 }
 
+.navbar-burger{
+    color: white;
+}
+#navbarBasicExample{
+    background-color:#0c0c0c ;
+}
+
 
 footer{
     background-color:#F1580c ;
@@ -145,6 +153,9 @@ label{
     color: white;
     padding-left: 20px;
 
+}
+a{
+    color: white;
 }
 a:hover{
     color: #F1580c;
