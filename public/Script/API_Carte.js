@@ -1,8 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoieGF2YWRlbmlzIiwiYSI6ImNsZThlcjQyNTBlb3ozdm5iaGx3MHltdWsifQ.J9tBXCZUfsGJmYaKIC2sPg';
 
 let mapCenter = [
-    longitude.value !== '' ? longitude.value : -1.5,
-    latitude.value !== '' ? longitude.value : 47.5
+    -1,47
 ];
 
 let start = mapCenter;

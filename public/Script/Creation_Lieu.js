@@ -10,7 +10,7 @@ let map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v12',
     center: mapCenter, // starting position
-    zoom: 12
+    zoom: 7
 });
 
 // create a function to make a directions request
