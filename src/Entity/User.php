@@ -84,9 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $imageFile;
 
 
-
     #[ORM\Column(nullable: true)] private ?\DateTime $updatedAct;
-
 
 
     public function __construct()
@@ -330,6 +328,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             'password' => $this->password,
         ];
     }
-    public function __unserialize(array $serialized){    $this->imageFile = base64_decode($serialized['imageFile']);    $this->email = $serialized['email'];    $this->id = $serialized['id'];    $this->password = $serialized['password'];    return $this;}
+
+    public function __unserialize(array $serialized)
+    {
+        $this->imageFile = base64_decode($serialized['imageFile']);
+        $this->email = $serialized['email'];
+        $this->id = $serialized['id'];
+        $this->password = $serialized['password'];
+        return $this;
+    }
 
 }
