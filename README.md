@@ -1,6 +1,6 @@
 Projet Php Sortir.com
 
-Language : Php Symfony / BDD : MySQL / Front : HTML,CSS,Javascript,Bootstrap / IDE : PhpStorm
+Langage : Php Symfony / BDD : MySQL / Front : HTML,CSS,Javascript,Bootstrap / IDE : PhpStorm
 
 
 La société ENI souhaite développer pour ses stagiaires actifs ainsi que ses anciens stagiaires 
